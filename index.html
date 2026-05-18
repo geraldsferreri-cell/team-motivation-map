@@ -10,17 +10,21 @@
   body {
     font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
     background: linear-gradient(135deg, #FFF8E7 0%, #FFE8A3 50%, #FFD54F 100%);
-    min-height: 100vh;
-    padding: 40px 20px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 16px 20px;
     color: #333;
+    overflow: hidden;
   }
-  .container { max-width: 1200px; margin: 0 auto; }
+  .container { max-width: 1200px; margin: 0 auto; flex: 1; display: flex; flex-direction: column; overflow: hidden; }
 
   /* ===== Header ===== */
   .header {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 16px;
     position: relative;
+    flex-shrink: 0;
   }
   .header-badge {
     display: inline-block;
@@ -58,10 +62,11 @@
     background: white;
     border-radius: 24px;
     padding: 36px 40px;
-    margin-bottom: 32px;
     box-shadow: 0 8px 32px rgba(0,0,0,0.08);
     position: relative;
     overflow: hidden;
+    min-height: 60px;
+    flex: 1 1 0%;
   }
   .section::before {
     content: '';
@@ -70,15 +75,63 @@
     height: 5px;
   }
   .section-map::before { background: linear-gradient(90deg, #E65100, #F57C00, #FFB300, #FFD54F); }
+  .section-map,
+  .section-summary {
+    overflow-y: auto;
+  }
   .section-record {
     display: flex;
     flex-direction: column;
-    max-height: calc(100vh - 120px);
     overflow: hidden;
+    flex: 1.2 1 0%;
   }
   .section-record .record-table-wrap {
     overflow: auto;
     flex: 1;
+  }
+  .section-record::before { background: linear-gradient(90deg, #1976D2, #42A5F5); }
+  .section-summary::before { background: linear-gradient(90deg, #7B1FA2, #AB47BC); }
+
+  /* ===== Main Content Layout (resizable sections) ===== */
+  .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .resize-handle {
+    height: 12px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: row-resize;
+    background: transparent;
+    position: relative;
+    z-index: 20;
+    transition: background 0.2s;
+  }
+  .resize-handle::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 48px;
+    height: 4px;
+    background: #CCC;
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
+  .resize-handle:hover,
+  .resize-handle.active {
+    background: rgba(25, 118, 210, 0.06);
+  }
+  .resize-handle:hover::before,
+  .resize-handle.active::before {
+    background: #1976D2;
+    width: 72px;
+    box-shadow: 0 1px 6px rgba(25,118,210,0.3);
+  }
   }
   .section-record::before { background: linear-gradient(90deg, #1976D2, #42A5F5); }
   .section-summary::before { background: linear-gradient(90deg, #7B1FA2, #AB47BC); }
@@ -402,15 +455,19 @@
 
   .footer {
     text-align: center;
-    margin-top: 32px;
+    margin-top: 8px;
     color: #999;
     font-size: 13px;
+    flex-shrink: 0;
   }
   .footer span { color: #1976D2; font-weight: 600; }
 
   @media print {
-    body { background: white; padding: 20px; }
-    .section { break-inside: avoid; box-shadow: none; border: 1px solid #EEE; }
+    body { background: white; padding: 20px; height: auto; overflow: visible; display: block; }
+    .container { display: block; overflow: visible; }
+    .main-content { display: block; overflow: visible; }
+    .resize-handle { display: none; }
+    .section { break-inside: avoid; box-shadow: none; border: 1px solid #EEE; flex: none; height: auto; overflow: visible; }
     .selector-area { display: none; }
     .input-cell input,
     .input-cell textarea { border-style: solid; }
@@ -429,6 +486,9 @@
     <h1>📋 有效激励 · 课后作业</h1>
     <h2>不用发红包，照样带好团队</h2>
   </div>
+
+  <!-- ========== Resizable Sections ========== -->
+  <div class="main-content">
 
   <!-- ========== Part 1: 员工激励地图 ========== -->
   <div class="section section-map">
@@ -588,6 +648,7 @@
     </p>
   </div>
 
+  <div class="resize-handle" title="拖拽调节上方板块大小"></div>
   <!-- ========== Part 2: 一周激励实践记录表 ========== -->
   <div class="section section-record">
     <div class="section-title">
@@ -739,6 +800,7 @@
     </div>
   </div>
 
+  <div class="resize-handle" title="拖拽调节上方板块大小"></div>
   <!-- ========== Part 3: 团队画像总览 & 激励速查卡 ========== -->
   <div class="section section-summary">
     <div class="section-title">
@@ -806,6 +868,7 @@
       </div>
     </div>
   </div>
+  </div><!-- end main-content -->
 
   <div class="footer">
     有效激励，从今天开始实践！ | 共 <span>19</span> 名团队成员 · 方片新媒体管理夜校课后作业
@@ -1038,6 +1101,100 @@ function fillEmployee(value) {
   saveData();
   generateSummary(row);
 }
+
+// ===== 板块大小拖拽调节 =====
+(function() {
+  var mainContent = document.querySelector('.main-content');
+  if (!mainContent) return;
+  var sections = mainContent.querySelectorAll(':scope > .section');
+  var handles = mainContent.querySelectorAll('.resize-handle');
+  var HEIGHT_KEY = 'motivation_map_section_heights';
+
+  var dragging = false;
+  var activeIdx = -1;
+  var startY = 0;
+  var startH = [];
+
+  function getH(sec) { return sec.getBoundingClientRect().height; }
+
+  handles.forEach(function(h) {
+    h.addEventListener('mousedown', onDown);
+    h.addEventListener('touchstart', onDown, { passive: false });
+  });
+
+  function onDown(e) {
+    e.preventDefault();
+    var idx = Array.prototype.indexOf.call(handles, this);
+    dragging = true;
+    activeIdx = idx;
+    startY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+    startH = [];
+    sections.forEach(function(s) { startH.push(getH(s)); });
+    this.classList.add('active');
+    document.body.style.cursor = 'row-resize';
+    document.body.style.userSelect = 'none';
+    document.body.style.webkitUserSelect = 'none';
+  }
+
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('touchmove', onMove, { passive: false });
+
+  function onMove(e) {
+    if (!dragging) return;
+    e.preventDefault();
+    var y = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+    var dy = y - startY;
+    var above = sections[activeIdx];
+    var below = sections[activeIdx + 1];
+    var newAbove = Math.max(60, startH[activeIdx] + dy);
+    var newBelow = Math.max(60, startH[activeIdx + 1] - dy);
+    above.style.flex = 'none';
+    above.style.height = newAbove + 'px';
+    below.style.flex = 'none';
+    below.style.height = newBelow + 'px';
+  }
+
+  document.addEventListener('mouseup', onUp);
+  document.addEventListener('touchend', onUp);
+
+  function onUp() {
+    if (!dragging) return;
+    dragging = false;
+    handles[activeIdx].classList.remove('active');
+    document.body.style.cursor = '';
+    document.body.style.userSelect = '';
+    document.body.style.webkitUserSelect = '';
+    saveHeights();
+  }
+
+  function saveHeights() {
+    var h = [];
+    sections.forEach(function(s) { h.push(Math.round(getH(s))); });
+    try { localStorage.setItem(HEIGHT_KEY, JSON.stringify(h)); } catch(e) {}
+  }
+
+  // 双击手柄恢复默认等分
+  handles.forEach(function(h, i) {
+    h.addEventListener('dblclick', function() {
+      sections[i].style.flex = '';
+      sections[i].style.height = '';
+      sections[i + 1].style.flex = '';
+      sections[i + 1].style.height = '';
+      try { localStorage.removeItem(HEIGHT_KEY); } catch(e) {}
+    });
+  });
+
+  // 恢复保存的高度
+  try {
+    var saved = JSON.parse(localStorage.getItem(HEIGHT_KEY));
+    if (saved && saved.length === sections.length) {
+      sections.forEach(function(s, i) {
+        s.style.flex = 'none';
+        s.style.height = saved[i] + 'px';
+      });
+    }
+  } catch(e) {}
+})();
 </script>
 
 </body>
