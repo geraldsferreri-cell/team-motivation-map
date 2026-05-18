@@ -306,30 +306,38 @@
   }
   .input-cell textarea { resize: vertical; min-height: 44px; }
 
-  /* ===== Summary column textarea (large with scrollbar) ===== */
+  /* ===== Summary column (auto-generated) ===== */
   .summary-cell {
-    min-width: 180px;
+    min-width: 200px;
+    max-width: 280px;
+    text-align: left !important;
+    vertical-align: top !important;
   }
-  .summary-textarea {
+  .summary-display {
     width: 100%;
-    min-height: 80px;
-    max-height: 160px;
-    border: 2px dashed #CCC;
+    min-height: 60px;
+    max-height: 150px;
+    border: 1px dashed #BBDEFB;
     border-radius: 8px;
-    padding: 10px;
+    padding: 10px 12px;
     font-family: inherit;
     font-size: 13px;
-    background: #FAFAFA;
-    outline: none;
-    resize: vertical;
+    background: #F0F7FF;
+    color: #333;
+    line-height: 1.7;
     overflow-y: auto;
-    line-height: 1.6;
-    transition: all 0.3s;
+    white-space: pre-wrap;
+    word-break: break-word;
   }
-  .summary-textarea:focus {
+  .summary-display:empty::before {
+    content: '（根据左侧内容自动生成）';
+    color: #90A4AE;
+    font-style: italic;
+  }
+  .summary-display.has-content {
+    background: #E3F2FD;
     border-color: #1976D2;
-    background: white;
-    box-shadow: 0 0 0 3px rgba(25,118,210,0.1);
+    border-style: solid;
   }
 
   /* Auto-fill highlight */
@@ -386,6 +394,7 @@
     .selector-area { display: none; }
     .input-cell input,
     .input-cell textarea { border-style: solid; }
+    .summary-display { background: #F5F5F5 !important; border: 1px solid #DDD !important; }
   }
 </style>
 </head>
@@ -627,7 +636,7 @@
             <td class="input-cell"><textarea placeholder="例如：独立完成了XXX项目统筹..."></textarea></td>
             <td class="input-cell"><input type="text" placeholder="例如：提前X天交付/零差错..."></td>
             <td class="input-cell"><input type="text" placeholder="例如：荣誉+授权"></td>
-            <td class="input-cell summary-cell"><textarea class="summary-textarea" placeholder="总结本次激励效果，回顾具体事件、结果、激励方式..."></textarea></td>
+            <td class="input-cell summary-cell"><div class="summary-display" id="summary_1"></div></td>
           </tr>
           <tr data-row="2">
             <td><b>2</b></td>
@@ -638,7 +647,7 @@
             <td class="input-cell"><textarea placeholder=""></textarea></td>
             <td class="input-cell"><input type="text" placeholder=""></td>
             <td class="input-cell"><input type="text" placeholder=""></td>
-            <td class="input-cell summary-cell"><textarea class="summary-textarea" placeholder=""></textarea></td>
+            <td class="input-cell summary-cell"><div class="summary-display" id="summary_2"></div></td>
           </tr>
           <tr data-row="3">
             <td><b>3</b></td>
@@ -649,7 +658,7 @@
             <td class="input-cell"><textarea placeholder=""></textarea></td>
             <td class="input-cell"><input type="text" placeholder=""></td>
             <td class="input-cell"><input type="text" placeholder=""></td>
-            <td class="input-cell summary-cell"><textarea class="summary-textarea" placeholder=""></textarea></td>
+            <td class="input-cell summary-cell"><div class="summary-display" id="summary_3"></div></td>
           </tr>
           <tr data-row="4">
             <td><b>4</b></td>
@@ -660,7 +669,7 @@
             <td class="input-cell"><textarea placeholder=""></textarea></td>
             <td class="input-cell"><input type="text" placeholder=""></td>
             <td class="input-cell"><input type="text" placeholder=""></td>
-            <td class="input-cell summary-cell"><textarea class="summary-textarea" placeholder=""></textarea></td>
+            <td class="input-cell summary-cell"><div class="summary-display" id="summary_4"></div></td>
           </tr>
           <tr data-row="5">
             <td><b>5</b></td>
@@ -671,7 +680,7 @@
             <td class="input-cell"><textarea placeholder=""></textarea></td>
             <td class="input-cell"><input type="text" placeholder=""></td>
             <td class="input-cell"><input type="text" placeholder=""></td>
-            <td class="input-cell summary-cell"><textarea class="summary-textarea" placeholder=""></textarea></td>
+            <td class="input-cell summary-cell"><div class="summary-display" id="summary_5"></div></td>
           </tr>
           <tr data-row="6">
             <td><b>6</b></td>
@@ -682,7 +691,7 @@
             <td class="input-cell"><textarea placeholder=""></textarea></td>
             <td class="input-cell"><input type="text" placeholder=""></td>
             <td class="input-cell"><input type="text" placeholder=""></td>
-            <td class="input-cell summary-cell"><textarea class="summary-textarea" placeholder=""></textarea></td>
+            <td class="input-cell summary-cell"><div class="summary-display" id="summary_6"></div></td>
           </tr>
           <!-- 备用行 -->
           <tr data-row="7" style="opacity:0.45;">
@@ -693,7 +702,7 @@
             <td class="input-cell"><textarea placeholder=""></textarea></td>
             <td class="input-cell"><input type="text" placeholder=""></td>
             <td class="input-cell"><input type="text" placeholder=""></td>
-            <td class="input-cell summary-cell"><textarea class="summary-textarea" placeholder=""></textarea></td>
+            <td class="input-cell summary-cell"><div class="summary-display" id="summary_7"></div></td>
           </tr>
           <tr data-row="8" style="opacity:0.35;">
             <td><b>8</b></td>
@@ -703,7 +712,7 @@
             <td class="input-cell"><textarea placeholder=""></textarea></td>
             <td class="input-cell"><input type="text" placeholder=""></td>
             <td class="input-cell"><input type="text" placeholder=""></td>
-            <td class="input-cell summary-cell"><textarea class="summary-textarea" placeholder=""></textarea></td>
+            <td class="input-cell summary-cell"><div class="summary-display" id="summary_8"></div></td>
           </tr>
         </tbody>
       </table>
@@ -795,12 +804,14 @@ function saveData() {
     data['name_html_' + i] = document.getElementById('name_' + i) ? document.getElementById('name_' + i).innerHTML : '';
     data['disc_html_' + i] = document.getElementById('disc_' + i) ? document.getElementById('disc_' + i).innerHTML : '';
     data['stage_html_' + i] = document.getElementById('stage_' + i) ? document.getElementById('stage_' + i).innerHTML : '';
-    // inputs & textareas in this row
+    // inputs & textareas in this row (summary is auto-generated, skip)
     const tr = document.querySelector('tr[data-row="' + i + '"]');
     if (tr) {
       const inputs = tr.querySelectorAll('input[type="text"]');
-      const textareas = tr.querySelectorAll('textarea');
+      // input[0]=日期, input[1]=结果, input[2]=方式
       inputs.forEach(function(inp, idx) { data['row' + i + '_input_' + idx] = inp.value; });
+      // textarea[0]=具体事件 (summary is div, skip)
+      const textareas = tr.querySelectorAll('textarea');
       textareas.forEach(function(ta, idx) { data['row' + i + '_textarea_' + idx] = ta.value; });
     }
   }
@@ -845,17 +856,85 @@ function restoreData() {
   } catch(e) {}
 }
 
-// 页面加载时恢复数据
-document.addEventListener('DOMContentLoaded', restoreData);
+// ===== 自动总结生成 =====
 
-// 自动保存：监听所有输入变化（用事件委托）
-document.getElementById('recordTable').addEventListener('input', function() {
-  // 用防抖避免频繁写入
+function generateSummary(rowNum) {
+  var tr = document.querySelector('tr[data-row="' + rowNum + '"]');
+  if (!tr) return;
+
+  var nameEl = document.getElementById('name_' + rowNum);
+  var nameText = nameEl ? nameEl.textContent.trim() : '';
+  // 过滤掉 emoji 和 "选填" / "待选择"
+  nameText = nameText.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, '').replace(/[\u2600-\u27BF]/g, '').trim();
+  if (nameText === '待选择' || nameText === '选填') nameText = '';
+
+  var inputs = tr.querySelectorAll('input[type="text"]');
+  var textareas = tr.querySelectorAll('textarea');
+
+  var dateStr = inputs[0] ? inputs[0].value.trim() : '';
+  var eventStr = textareas[0] ? textareas[0].value.trim() : '';
+  var resultStr = inputs[1] ? inputs[1].value.trim() : '';
+  var methodStr = inputs[2] ? inputs[2].value.trim() : '';
+
+  var summaryEl = document.getElementById('summary_' + rowNum);
+  if (!summaryEl) return;
+
+  var parts = [];
+  if (eventStr) parts.push(eventStr);
+  if (resultStr) parts.push('取得了' + resultStr);
+  if (methodStr) parts.push('采用' + methodStr + '方式进行激励');
+
+  if (parts.length === 0) {
+    summaryEl.textContent = '';
+    summaryEl.classList.remove('has-content');
+    return;
+  }
+
+  var fullSummary = '';
+  if (dateStr && nameText) {
+    fullSummary = dateStr + '，' + nameText + ' ' + parts.join('，') + '。';
+  } else if (dateStr) {
+    fullSummary = dateStr + '，' + parts.join('，') + '。';
+  } else if (nameText) {
+    fullSummary = nameText + ' ' + parts.join('，') + '。';
+  } else {
+    fullSummary = parts.join('，') + '。';
+  }
+
+  summaryEl.textContent = fullSummary;
+  summaryEl.classList.add('has-content');
+}
+
+function generateAllSummaries() {
+  for (let i = 1; i <= 8; i++) {
+    generateSummary(i);
+  }
+}
+
+// 页面加载时恢复数据，并生成总结
+document.addEventListener('DOMContentLoaded', function() {
+  restoreData();
+  generateAllSummaries();
+});
+
+// 自动保存 + 自动总结：监听所有输入变化（用事件委托）
+document.getElementById('recordTable').addEventListener('input', function(e) {
+  var tr = e.target.closest('tr[data-row]');
+  if (tr) {
+    var row = parseInt(tr.getAttribute('data-row'), 10);
+    if (!isNaN(row)) {
+      // 延迟生成总结（防抖）
+      clearTimeout(window._summaryTimer);
+      window._summaryTimer = setTimeout(function() { generateSummary(row); }, 400);
+    }
+  }
+
+  // 用防抖避免频繁写入 localStorage
   clearTimeout(window._saveTimer);
   window._saveTimer = setTimeout(saveData, 300);
 });
 
-// 员工选择器变化后也保存（fillEmployee 内部触发 input 不会自动覆盖 innerHTML，所以手动调一次）
+// 员工选择器变化后也保存并生成总结
 // ===== 原有逻辑 =====
 
 // 当前填充到哪一行
@@ -931,8 +1010,9 @@ function fillEmployee(value) {
   // 重置选择器
   document.getElementById('empSelect').value = '';
 
-  // 选择员工后立即保存
+  // 选择员工后立即保存 + 生成该行的总结
   saveData();
+  generateSummary(row);
 }
 </script>
 
