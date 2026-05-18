@@ -316,7 +316,7 @@
   .summary-display {
     width: 100%;
     min-height: 60px;
-    max-height: 150px;
+    max-height: 180px;
     border: 1px dashed #BBDEFB;
     border-radius: 8px;
     padding: 10px 12px;
@@ -324,7 +324,7 @@
     font-size: 13px;
     background: #F0F7FF;
     color: #333;
-    line-height: 1.7;
+    line-height: 1.8;
     overflow-y: auto;
     white-space: pre-wrap;
     word-break: break-word;
@@ -879,29 +879,33 @@ function generateSummary(rowNum) {
   var summaryEl = document.getElementById('summary_' + rowNum);
   if (!summaryEl) return;
 
-  var parts = [];
-  if (eventStr) parts.push(eventStr);
-  if (resultStr) parts.push('取得了' + resultStr);
-  if (methodStr) parts.push('采用' + methodStr + '方式进行激励');
-
-  if (parts.length === 0) {
+  // 统计是否有填写内容
+  var hasAny = dateStr || eventStr || resultStr || methodStr;
+  if (!hasAny) {
     summaryEl.textContent = '';
     summaryEl.classList.remove('has-content');
     return;
   }
 
-  var fullSummary = '';
-  if (dateStr && nameText) {
-    fullSummary = dateStr + '，' + nameText + ' ' + parts.join('，') + '。';
-  } else if (dateStr) {
-    fullSummary = dateStr + '，' + parts.join('，') + '。';
-  } else if (nameText) {
-    fullSummary = nameText + ' ' + parts.join('，') + '。';
-  } else {
-    fullSummary = parts.join('，') + '。';
+  // 按带小标题的格式拼接
+  var lines = [];
+  if (nameText) {
+    lines.push('激励对象：' + nameText);
+  }
+  if (dateStr) {
+    lines.push('激励日期：' + dateStr);
+  }
+  if (eventStr) {
+    lines.push('具体事件：' + eventStr);
+  }
+  if (resultStr) {
+    lines.push('带来的结果：' + resultStr);
+  }
+  if (methodStr) {
+    lines.push('使用的激励方式：' + methodStr);
   }
 
-  summaryEl.textContent = fullSummary;
+  summaryEl.textContent = lines.join('\n');
   summaryEl.classList.add('has-content');
 }
 
