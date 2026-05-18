@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>有效激励 · 课后作业 — 员工激励地图</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #FFF8E7 0%, #FFE8A3 50%, #FFD54F 100%);
+    min-height: 100vh;
+    padding: 40px 20px;
+    color: #333;
+  }
+  .container { max-width: 1200px; margin: 0 auto; }
+
+  /* ===== Header ===== */
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+  }
+  .header-badge {
+    display: inline-block;
+    background: #1976D2;
+    color: white;
+    font-size: 14px;
+    padding: 6px 20px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    letter-spacing: 2px;
+  }
+  .header h1 {
+    font-size: 42px;
+    color: #1565C0;
+    margin-bottom: 8px;
+    font-weight: 800;
+  }
+  .header h2 {
+    font-size: 22px;
+    color: #666;
+    font-weight: 400;
+  }
+  .header-deco {
+    position: absolute;
+    left: 10px;
+    top: 0;
+    width: 80px;
+    height: 100px;
+    clip-path: polygon(0% 0%, 100% 0%, 0% 100%);
+    background: #7B1FA2;
+  }
+
+  /* ===== Section Card ===== */
+  .section {
+    background: white;
+    border-radius: 24px;
+    padding: 36px 40px;
+    margin-bottom: 32px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+  .section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+  }
+  .section-map::before { background: linear-gradient(90deg, #E65100, #F57C00, #FFB300, #FFD54F); }
+  .section-record::before { background: linear-gradient(90deg, #1976D2, #42A5F5); }
+  .section-summary::before { background: linear-gradient(90deg, #7B1FA2, #AB47BC); }
+
+  .section-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px; height: 38px;
+    background: #1976D2;
+    color: white;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 800;
+  }
+
+  /* ===== Legend ===== */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding: 16px;
+    background: #FAFAFA;
+    border-radius: 14px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+  }
+  .legend-icon { font-size: 20px; }
+
+  /* ===== Matrix Grid (CSS Grid for proper layout) ===== */
+  .matrix-container {
+    display: grid;
+    grid-template-columns: 140px repeat(4, 1fr);
+    gap: 3px;
+    min-height: 520px;
+  }
+
+  /* Corner cell */
+  .matrix-corner {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    background: #ECEFF1;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 700;
+    color: #666;
+  }
+
+  /* Column headers (D1-D4) */
+  .col-header-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 8px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  .col-header-label { font-size: 18px; font-weight: 800; color: #333; }
+  .col-header-name { font-size: 13px; color: #555; margin-top: 2px; }
+  .col-header-desc { font-size: 11px; color: #999; margin-top: 4px; line-height: 1.4; }
+
+  /* Row header cells */
+  .row-header-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 8px;
+    border-radius: 10px;
+    gap: 2px;
+  }
+  .row-header-icon { font-size: 26px; }
+  .row-header-type { font-size: 16px; font-weight: 700; color: #333; }
+  .row-header-sub { font-size: 11px; color: #888; }
+
+  /* Data cells with DISC colors */
+  .matrix-cell {
+    border-radius: 10px;
+    padding: 14px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 100px;
+  }
+  .cell-D { background: linear-gradient(135deg, #FFF3E0, #FFE0B2); border: 2px solid #FF9800; }
+  .cell-I { background: linear-gradient(135deg, #E3F2FD, #BBDEFB); border: 2px solid #42A5F5; }
+  .cell-S { background: linear-gradient(135deg, #E8F5E9, #C8E6C9); border: 2px solid #66BB6A; }
+  .cell-C { background: linear-gradient(135deg, #F3E5F5, #E1BEE7); border: 2px solid #AB47BC; }
+  .cell-empty { background: #F5F5F5; border: 2px dashed #DDD; }
+
+  .person-tag {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 4px 14px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.88);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    line-height: 1.5;
+  }
+  .person-count {
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 2px;
+  }
+  .strategy-tip {
+    font-size: 10px;
+    color: #777;
+    line-height: 1.4;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+
+  /* ===== Record Table ===== */
+  .record-table-wrap { overflow-x: auto; }
+  .record-table {
+    width: 100%;
+    min-width: 900px;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .record-table th {
+    background: #1976D2;
+    color: white;
+    padding: 14px 10px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  .record-table td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #EEE;
+    text-align: center;
+    vertical-align: middle;
+  }
+  .record-table tr:hover td { background: #F5F9FF; }
+
+  /* Employee selector area */
+  .selector-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+    padding: 16px 20px;
+    background: #F0F7FF;
+    border-radius: 12px;
+    border-left: 4px solid #1976D2;
+  }
+  .selector-area label {
+    font-weight: 700;
+    font-size: 15px;
+    color: #1565C0;
+    white-space: nowrap;
+  }
+  .employee-select {
+    flex: 1;
+    max-width: 280px;
+    padding: 10px 14px;
+    border: 2px solid #BBDEFB;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: white;
+  }
+  .employee-select:focus {
+    border-color: #1976D2;
+    box-shadow: 0 0 0 3px rgba(25,118,210,0.12);
+  }
+
+  .disc-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+  }
+  .disc-d { background: #E65100; }
+  .disc-i { background: #1976D2; }
+  .disc-s { background: #388E3C; }
+  .disc-c { background: #7B1FA2; }
+
+  .stage-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    background: #EEE;
+    color: #555;
+  }
+
+  .input-cell input,
+  .input-cell textarea {
+    width: 100%;
+    border: 2px dashed #CCC;
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-family: inherit;
+    font-size: 13px;
+    background: #FAFAFA;
+    outline: none;
+    transition: all 0.3s;
+  }
+  .input-cell input:focus,
+  .input-cell textarea:focus {
+    border-color: #1976D2;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(25,118,210,0.1);
+  }
+  .input-cell textarea { resize: vertical; min-height: 44px; }
+
+  /* Auto-fill highlight */
+  .auto-filled {
+    animation: fadeIn 0.4s ease;
+    background-color: #E3F2FD !important;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0.3; transform: translateY(-2px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== Stats Grid ===== */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+  }
+  .stat-card {
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    color: white;
+  }
+  .stat-num { font-size: 36px; font-weight: 800; }
+  .stat-label { font-size: 13px; opacity: 0.92; margin-top: 4px; line-height: 1.5; }
+
+  .quick-ref {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 20px;
+  }
+  .ref-card {
+    border-radius: 14px;
+    padding: 18px;
+    color: white;
+  }
+  .ref-card h4 { font-size: 16px; margin-bottom: 8px; }
+  .ref-card p { font-size: 12px; opacity: 0.93; line-height: 1.65; }
+
+  .footer {
+    text-align: center;
+    margin-top: 32px;
+    color: #999;
+    font-size: 13px;
+  }
+  .footer span { color: #1976D2; font-weight: 600; }
+
+  @media print {
+    body { background: white; padding: 20px; }
+    .section { break-inside: avoid; box-shadow: none; border: 1px solid #EEE; }
+    .selector-area { display: none; }
+    .input-cell input,
+    .input-cell textarea { border-style: solid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ========== Header ========== -->
+  <div class="header">
+    <div class="header-deco"></div>
+    <span class="header-badge">方片新媒体 · 管理夜校</span>
+    <h1>📋 有效激励 · 课后作业</h1>
+    <h2>不用发红包，照样带好团队</h2>
+  </div>
+
+  <!-- ========== Part 1: 员工激励地图 ========== -->
+  <div class="section section-map">
+    <div class="section-title">
+      <span class="section-num">01</span>
+      员工激励地图（DISC性格 × 发展阶段）
+    </div>
+
+    <!-- Legend -->
+    <div class="legend">
+      <div class="legend-item" style="background:#FFF3E0;color:#E65100"><span class="legend-icon">🐯</span> D·老虎（支配型）— 权力激励 · 少管控多放权</div>
+      <div class="legend-item" style="background:#E3F2FD;color:#1976D2"><span class="legend-icon">🦚</span> I·孔雀（影响型）— 荣誉激励 · 当众夸给舞台</div>
+      <div class="legend-item" style="background:#E8F5E9;color:#388E3C"><span class="legend-icon">🐨</span> S·考拉（稳健型）— 安心激励 · 少施压多兜底</div>
+      <div class="legend-item" style="background:#F3E5F5;color:#7B1FA2"><span class="legend-icon">🦉</span> C·猫头鹰（严谨型）— 规则激励 · 给标准不画饼</div>
+    </div>
+
+    <!-- CSS Grid Matrix -->
+    <div class="matrix-container">
+
+      <!-- Row 0: Column Headers -->
+      <div class="matrix-corner">性格 \ 阶段</div>
+
+      <div class="col-header-cell">
+        <span class="col-header-label">D1</span>
+        <span class="col-header-name">学习者 / 新手</span>
+        <span class="col-header-desc">技能≈0 · 热情最高<br>指令式辅导</span>
+      </div>
+
+      <div class="col-header-cell">
+        <span class="col-header-label">D2</span>
+        <span class="col-header-name">初做者 / 上手</span>
+        <span class="col-header-desc">技能一点 · 热情下降<br>教练式辅导</span>
+      </div>
+
+      <div class="col-header-cell">
+        <span class="col-header-label">D3</span>
+        <span class="col-header-name">有经验者 / 熟练</span>
+        <span class="col-header-desc">技能熟练 · 态度波动<br>支持式辅导</span>
+      </div>
+
+      <div class="col-header-cell">
+        <span class="col-header-label">D4</span>
+        <span class="col-header-name">熟手 / 高手</span>
+        <span class="col-header-desc">技能成熟 · 态度稳定<br>授权式辅导</span>
+      </div>
+
+      <!-- Row 1: D 老虎 -->
+      <div class="row-header-cell cell-D">
+        <span class="row-header-icon">🐯</span>
+        <span class="row-header-type">D·老虎</span>
+        <span class="row-header-sub">支配型 · 结果导向</span>
+      </div>
+      <div class="matrix-cell cell-empty">
+        <span style="color:#BBB;font-size:12px;">暂无人员</span>
+      </div>
+      <div class="matrix-cell cell-D">
+        <span class="person-tag">白涵蕊</span>
+        <span class="person-tag">厉淑涵</span>
+        <span class="person-count" style="color:#E65100;">2 人</span>
+        <span class="strategy-tip">教练式 + 放权引导</span>
+      </div>
+      <div class="matrix-cell cell-empty">
+        <span style="color:#BBB;font-size:12px;">暂无人员</span>
+      </div>
+      <div class="matrix-cell cell-empty">
+        <span style="color:#BBB;font-size:12px;">暂无人员</span>
+      </div>
+
+      <!-- Row 2: I 孔雀 -->
+      <div class="row-header-cell cell-I">
+        <span class="row-header-icon">🦚</span>
+        <span class="row-header-type">I·孔雀</span>
+        <span class="row-header-sub">影响型 · 活泼爱表现</span>
+      </div>
+      <div class="matrix-cell cell-I">
+        <span class="person-tag">陈昊</span>
+        <span class="person-tag">耿群婷</span>
+        <span class="person-count" style="color:#1976D2;">2 人</span>
+        <span class="strategy-tip">指令式 + 当众认可</span>
+      </div>
+      <div class="matrix-cell cell-I">
+        <span class="person-tag">王慧颖</span>
+        <span class="person-count" style="color:#1976D2;">1 人</span>
+        <span class="strategy-tip">教练式 + 公开表扬</span>
+      </div>
+      <div class="matrix-cell cell-empty">
+        <span style="color:#BBB;font-size:12px;">暂无人员</span>
+      </div>
+      <div class="matrix-cell cell-I">
+        <span class="person-tag">王宇 ⭐</span>
+        <span class="person-tag">薛董洁 ⭐</span>
+        <span class="person-count" style="color:#1976D2;">2 人</span>
+        <span class="strategy-tip">授权式 + 给舞台决策权</span>
+      </div>
+
+      <!-- Row 3: S 考拉 -->
+      <div class="row-header-cell cell-S">
+        <span class="row-header-icon">🐨</span>
+        <span class="row-header-type">S·考拉</span>
+        <span class="row-header-sub">稳健型 · 默默兜底</span>
+      </div>
+      <div class="matrix-cell cell-S">
+        <span class="person-tag">刘金娣</span>
+        <span class="person-tag">刘忆彤</span>
+        <span class="person-tag">刘姿辰</span>
+        <span class="person-count" style="color:#388E3C;">3 人</span>
+        <span class="strategy-tip">指令式 + 安全感兜底</span>
+      </div>
+      <div class="matrix-cell cell-S">
+        <span class="person-tag">台育娴</span>
+        <span class="person-tag">高帆靖函</span>
+        <span class="person-count" style="color:#388E3C;">2 人</span>
+        <span class="strategy-tip">教练式 + 走心认可</span>
+      </div>
+      <div class="matrix-cell cell-S">
+        <span class="person-tag">曲姝洁 ⭐</span>
+        <span class="person-count" style="color:#388E3C;">1 人</span>
+        <span class="strategy-tip">支持式 + 给资源少施压</span>
+      </div>
+      <div class="matrix-cell cell-empty">
+        <span style="color:#BBB;font-size:12px;">暂无人员</span>
+      </div>
+
+      <!-- Row 4: C 猫头鹰 -->
+      <div class="row-header-cell cell-C">
+        <span class="row-header-icon">🦉</span>
+        <span class="row-header-type">C·猫头鹰</span>
+        <span class="row-header-sub">严谨型 · 理性细致</span>
+      </div>
+      <div class="matrix-cell cell-C">
+        <span class="person-tag">范诗涵</span>
+        <span class="person-tag">郭瑞雪</span>
+        <span class="person-tag">赵金如</span>
+        <span class="person-count" style="color:#7B1FA2;">3 人</span>
+        <span class="strategy-tip">指令式 + 给清晰标准</span>
+      </div>
+      <div class="matrix-cell cell-C">
+        <span class="person-tag">贾涵笑</span>
+        <span class="person-count" style="color:#7B1FA2;">1 人</span>
+        <span class="strategy-tip">教练式 + 给依据流程</span>
+      </div>
+      <div class="matrix-cell cell-C">
+        <span class="person-tag">胡钰欣 ⭐</span>
+        <span class="person-count" style="color:#7B1FA2;">1 人</span>
+        <span class="strategy-tip">支持式 + 专业尊重</span>
+      </div>
+      <div class="matrix-cell cell-C">
+        <span class="person-tag">栗帆 ⭐</span>
+        <span class="person-count" style="color:#7B1FA2;">1 人</span>
+        <span class="strategy-tip">授权式 + 牵头优化</span>
+      </div>
+
+    </div><!-- end matrix -->
+
+    <p style="margin-top: 18px; font-size: 13px; color: #888; text-align: center;">
+      💡 ⭐ 标记为 D4/D3 阶段骨干成员 → 本周激励重点对象（授权式辅导，给挑战、给舞台）
+    </p>
+  </div>
+
+  <!-- ========== Part 2: 一周激励实践记录表 ========== -->
+  <div class="section section-record">
+    <div class="section-title">
+      <span class="section-num">02</span>
+      一周激励实践记录表（至少 3 人 × 2 次 = ≥ 6 条记录）
+    </div>
+
+    <!-- 员工选择器 -->
+    <div class="selector-area">
+      <label for="empSelect">🎯 选择员工：</label>
+      <select id="empSelect" class="employee-select" onchange="fillEmployee(this.value)">
+        <option value="">—— 请选择要记录的员工 ——</option>
+        <optgroup label="⭐ D4 骨干组（推荐优先）">
+          <option value="王宇,I,熟手,D4">🦚 王宇 — I型孔雀 / D4熟手</option>
+          <option value="薛董洁,I,熟手,D4">🦚 薛董洁 — I型孔雀 / D4熟手</option>
+          <option value="栗帆,C,熟手,D4">🦉 栗帆 — C型猫头鹰 / D4熟手</option>
+        </optgroup>
+        <optgroup label="🌱 D3 成长组">
+          <option value="曲姝洁,S,有经验,D3">🐨 曲姝洁 — S型考拉 / D3有经验</option>
+          <option value="胡钰欣,C,有经验,D3">🦉 胡钰欣 — C型猫头鹰 / D3有经验</option>
+        </optgroup>
+        <optgroup label="📝 D2 上手组">
+          <option value="白涵蕊,D,初做者,D2">🐯 白涵蕊 — D型老虎 / D2初做者</option>
+          <option value="厉淑涵,D,初做者,D2">🐯 厉淑涵 — D型老虎 / D2初做者</option>
+          <option value="台育娴,S,初做者,D2">🐨 台育娴 — S型考拉 / D2初做者</option>
+          <option value="高帆靖函,S,初做者,D2">🐨 高帆靖函 — S型考拉 / D2初做者</option>
+          <option value="贾涵笑,C,初做者,D2">🦉 贾涵笑 — C型猫头鹰 / D2初做者</option>
+          <option value="王慧颖,I,初做者,D2">🦚 王慧颖 — I型孔雀 / D2初做者</option>
+        </optgroup>
+        <optgroup label="🌟 D1 新手组">
+          <option value="陈昊,I,新手,D1">🦚 陈昊 — I型孔雀 / D1新手</option>
+          <option value="耿群婷,I,新手,D1">🦚 耿群婷 — I型孔雀 / D1新手</option>
+          <option value="刘金娣,S,新手,D1">🐨 刘金娣 — S型考拉 / D1新手</option>
+          <option value="刘忆彤,S,新手,D1">🐨 刘忆彤 — S型考拉 / D1新手</option>
+          <option value="刘姿辰,S,新手,D1">🐨 刘姿辰 — S型考拉 / D1新手</option>
+          <option value="范诗涵,C,新手,D1">🦉 范诗涵 — C型猫头鹰 / D1新手</option>
+          <option value="郭瑞雪,C,新手,D1">🦉 郭瑞雪 — C型猫头鹰 / D1新手</option>
+          <option value="赵金如,C,新手,D1">🦉 赵金如 — C型猫头鹰 / D1新手</option>
+        </optgroup>
+      </select>
+      <span style="font-size:12px;color:#888;">选中后自动填充左侧信息</span>
+    </div>
+
+    <div class="record-table-wrap">
+      <table class="record-table" id="recordTable">
+        <thead>
+          <tr>
+            <th style="width:50px">序号</th>
+            <th style="width:95px">员工姓名</th>
+            <th style="width:75px">DISC类型</th>
+            <th style="width:80px">发展阶段</th>
+            <th style="width:110px">激励日期</th>
+            <th style="min-width:160px">具体事件（说行为）</th>
+            <th style="min-width:130px">带来的结果（说影响）</th>
+            <th style="min-width:110px">使用的激励方式</th>
+            <th style="min-width:100px">下次计划</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-row="1">
+            <td><b>1</b></td>
+            <td id="name_1"><b style="color:#CCC">待选择</b></td>
+            <td id="disc_1"><span class="stage-badge" style="opacity:0.4">—</span></td>
+            <td id="stage_1"><span class="stage-badge" style="opacity:0.4">—</span></td>
+            <td class="input-cell"><input type="text" placeholder="____月__日"></td>
+            <td class="input-cell"><textarea placeholder="例如：独立完成了XXX项目统筹..."></textarea></td>
+            <td class="input-cell"><input type="text" placeholder="例如：提前X天交付/零差错..."></td>
+            <td class="input-cell"><input type="text" placeholder="例如：荣誉+授权"></td>
+            <td class="input-cell"><input type="text" placeholder=""></td>
+          </tr>
+          <tr data-row="2">
+            <td><b>2</b></td>
+            <td id="name_2"><b style="color:#CCC">待选择</b></td>
+            <td id="disc_2"><span class="stage-badge" style="opacity:0.4">—</span></td>
+            <td id="stage_2"><span class="stage-badge" style="opacity:0.4">—</span></td>
+            <td class="input-cell"><input type="text" placeholder="____月__日"></td>
+            <td class="input-cell"><textarea placeholder=""></textarea></td>
+            <td class="input-cell"><input type="text" placeholder=""></td>
+            <td class="input-cell"><input type="text" placeholder=""></td>
+            <td class="input-cell"><input type="text" placeholder=""></td>
+          </tr>
+          <tr data-row="3">
+            <td><b>3</b></td>
+            <td id="name_3"><b style="color:#CCC">待选择</b></td>
+            <td id="disc_3"><span class="stage-badge" style="opacity:0.4">—</span></td>
+            <td id="stage_3"><span class="stage-badge" style="opacity:0.4">—</span></td>
+            <td class="input-cell"><input type="text" placeholder="____月__日"></td>
+            <td class="input-cell"><textarea placeholder=""></textarea></td>
+            <td class="input-cell"><input type="text" placeholder=""></td>
+            <td class="input-cell"><input type="text" placeholder=""></td>
+            <td class="input-cell"><input type="text" placeholder=""></td>
+          </tr>
+          <tr data-row="4">
+            <td><b>4</b></td>
+            <td id="name_4"><b style="color:#CCC">待选择</b></td>
+            <td id="disc_4"><span class="stage-badge" style="opacity:0.4">—</span></td>
+            <td id="stage_4"><span class="stage-badge" style="opacity:0.4">—</span></td>
+            <td class="input-cell"><input type="text" placeholder="____月__日"></td>
+            <td class="input-cell"><textarea placeholder=""></textarea></td>
+            <td class="input-cell"><input type="text" placeholder=""></td>
+            <td class="input-cell"><input type="text" placeholder=""></td>
+            <td class="input-cell"><input type="text" placeholder=""></td>
+          </tr>
+          <tr data-row="5">
+            <td><b>5</b></td>
+            <td id="name_5"><b style="color:#CCC">待选择</b></td>
+            <td id="disc_5"><span class="stage-badge" style="opacity:0.4">—</span></td>
+            <td id="stage_5"><span class="stage-badge" style="opacity:0.4">—</span></td>
+            <td class="input-cell"><input type="text" placeholder="____月__日"></td>
+            <td class="input-cell"><textarea placeholder=""></textarea></td>
+            <td class="input-cell"><input type="text" placeholder=""></td>
+            <td class="input-cell"><input type="text" placeholder=""></td>
+            <td class="input-cell"><input type="text" placeholder=""></td>
+          </tr>
+          <tr data-row="6">
+            <td><b>6</b></td>
+            <td id="name_6"><b style="color:#CCC">待选择</b></td>
+            <td id="disc_6"><span class="stage-badge" style="opacity:0.4">—</span></td>
+            <td id="stage_6"><span class="stage-badge" style="opacity:0.4">—</span></td>
+            <td class="input-cell"><input type="text" placeholder="____月__日"></td>
+            <td class="input-cell"><textarea placeholder=""></textarea></td>
+            <td class="input-cell"><input type="text" placeholder=""></td>
+            <td class="input-cell"><input type="text" placeholder=""></td>
+            <td class="input-cell"><input type="text" placeholder=""></td>
+          </tr>
+          <!-- 备用行 -->
+          <tr data-row="7" style="opacity:0.45;">
+            <td><b>7</b></td>
+            <td id="name_7"><b style="color:#AAA">选填</b></td>
+            <td colspan="2" style="font-size:12px;color:#AAA;">— 可补充其他成员 —</td>
+            <td class="input-cell"><input type="text" placeholder=""></td>
+            <td class="input-cell"><textarea placeholder=""></textarea></td>
+            <td class="input-cell"><input type="text" placeholder=""></td>
+            <td class="input-cell"><input type="text" placeholder=""></td>
+            <td class="input-cell"><input type="text" placeholder=""></td>
+          </tr>
+          <tr data-row="8" style="opacity:0.35;">
+            <td><b>8</b></td>
+            <td id="name_8"><b style="color:#AAA">选填</b></td>
+            <td colspan="2" style="font-size:12px;color:#AAA;">— 可补充其他成员 —</td>
+            <td class="input-cell"><input type="text" placeholder=""></td>
+            <td class="input-cell"><textarea placeholder=""></textarea></td>
+            <td class="input-cell"><input type="text" placeholder=""></td>
+            <td class="input-cell"><input type="text" placeholder=""></td>
+            <td class="input-cell"><input type="text" placeholder=""></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ========== Part 3: 团队画像总览 & 激励速查卡 ========== -->
+  <div class="section section-summary">
+    <div class="section-title">
+      <span class="section-num">03</span>
+      团队画像总览 & 激励速查卡
+    </div>
+
+    <h3 style="font-size:17px;margin-bottom:14px;color:#333;">📊 团队构成统计</h3>
+    <div class="stats-grid">
+      <div class="stat-card" style="background:linear-gradient(135deg,#E65100,#FF9800)">
+        <div class="stat-num">2</div>
+        <div class="stat-label">🐯 D型老虎（10.5%）<br>白涵蕊、厉淑涵</div>
+      </div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#1976D2,#42A5F5)">
+        <div class="stat-num">5</div>
+        <div class="stat-label">🦚 I型孔雀（26.3%）<br>陈昊、耿群婷、王慧颖、王宇、薛董洁</div>
+      </div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#388E3C,#66BB6A)">
+        <div class="stat-num">6</div>
+        <div class="stat-label">🐨 S型考拉（31.6%）<br>刘金娣、刘忆彤、刘姿辰、台育娴、高帆靖函、曲姝洁</div>
+      </div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#7B1FA2,#AB47BC)">
+        <div class="stat-num">6</div>
+        <div class="stat-label">🦉 C型猫头鹰（31.6%）<br>范诗涵、郭瑞雪、赵金如、贾涵笑、胡钰欣、栗帆</div>
+      </div>
+    </div>
+
+    <h3 style="font-size:17px;margin:24px 0 14px;color:#333;">📈 发展阶段分布</h3>
+    <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);">
+      <div class="stat-card" style="background:linear-gradient(135deg,#FF6B6B,#EE5A24)">
+        <div class="stat-num">8</div>
+        <div class="stat-label">D1 新手（42%）<br>需高频小认可</div>
+      </div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#FDCB6E,#F0932B)">
+        <div class="stat-num">5</div>
+        <div class="stat-label">D2 上手（26%）<br>需鼓励过瓶颈期</div>
+      </div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#6BCB77,#38ADA9)">
+        <div class="stat-num">2</div>
+        <div class="stat-label">D3 熟练（11%）<br>需支持资源绑定成长</div>
+      </div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#4ECDC4,#44A08D)">
+        <div class="stat-num">4</div>
+        <div class="stat-label">D4 高手（21%）<br>需挑战与舞台</div>
+      </div>
+    </div>
+
+    <h3 style="font-size:17px;margin:24px 0 14px;color:#333;">💡 本周激励重点建议</h3>
+    <div class="quick-ref">
+      <div class="ref-card" style="background:linear-gradient(135deg, #667eea, #764ba2);">
+        <h4>⭐ 骨干组（D4）— 授权激励</h4>
+        <p><b>王宇(I)</b> → 当众公开表扬 + 给牵头负责新项目的决策权<br><b>薛董洁(I)</b> → 部门例会表扬 + 安排做某项工作的负责人<br><b>栗帆(C)</b> → 认可专业能力 + 请其牵头完善某项标准/模板</p>
+      </div>
+      <div class="ref-card" style="background:linear-gradient(135deg, #f093fb, #f5576c);">
+        <h4>🌱 成长组（D3）— 支持激励</h4>
+        <p><b>曲姝洁(S)</b> → 私下走心认可 + 减压承诺"有困难跟我说"<br><b>胡钰欣(C)</b> → 固化标准不随意改 + 征求专业意见</p>
+      </div>
+      <div class="ref-card" style="background:linear-gradient(135deg, #4facfe, #00f2fe);">
+        <h4>📝 新手组（D1）— 指令认可</h4>
+        <p>C型(范诗涵/郭瑞雪/赵金如) · S型(刘金娣/刘忆彤/刘姿辰) · I型(陈昊/耿群婷)<br>做好一件事就及时肯定，高频小认可，给清晰指令</p>
+      </div>
+      <div class="ref-card" style="background:linear-gradient(135deg, #43e97b, #38f9d7);">
+        <h4>🔄 上手组（D2）— 教练辅导</h4>
+        <p>D型(白涵蕊/厉淑涵) · S型(台育娴/高帆靖函) · C型(贾涵笑) · I型(王慧颖)<br>一边教方法一边多鼓励，帮过瓶颈期，及时肯定进步</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    有效激励，从今天开始实践！ | 共 <span>19</span> 名团队成员 · 方片新媒体管理夜校课后作业
+  </div>
+
+</div>
+
+<script>
+// 当前填充到哪一行
+let currentFillRow = 1;
+
+function fillEmployee(value) {
+  if (!value) return;
+
+  // 找到下一个空行（姓名还是"待选择"状态的）
+  let row = null;
+  for (let i = 1; i <= 8; i++) {
+    const nameEl = document.getElementById('name_' + i);
+    if (nameEl && nameEl.textContent.includes('待选择') || nameEl && nameEl.textContent.trim() === '选填') {
+      row = i;
+      break;
+    }
+  }
+  if (!row) row = currentFillRow;
+
+  // 解析数据
+  const parts = value.split(',');
+  const name = parts[0];
+  const disc = parts[1].toUpperCase();
+  const stageText = parts[2];
+  const stageCode = parts[3];
+
+  // DISC 映射
+  const discMap = {
+    'D': { label: 'D 老虎', icon: '🐯', cls: 'disc-d' },
+    'I': { label: 'I 孔雀', icon: '🦚', cls: 'disc-i' },
+    'S': { label: 'S 考拉', icon: '🐨', cls: 'disc-s' },
+    'C': { label: 'C 猫头鹰', icon: '🦉', cls: 'disc-c' }
+  };
+  // Stage 映射
+  const stageMap = {
+    'D1': { label: 'D1 学习者' },
+    'D2': { label: 'D2 初做者' },
+    'D3': { label: 'D3 有经验' },
+    'D4': { label: 'D4 熟手' }
+  };
+
+  // 填充姓名
+  const nameCell = document.getElementById('name_' + row);
+  if (nameCell) {
+    const discInfo = discMap[disc] || {};
+    nameCell.innerHTML = '<b>' + name + '</b> ' + (discInfo.icon || '');
+    nameCell.classList.add('auto-filled');
+    setTimeout(() => nameCell.classList.remove('auto-filled'), 500);
+  }
+
+  // 填充 DISC 类型
+  const discCell = document.getElementById('disc_' + row);
+  if (discCell) {
+    const info = discMap[disc] || {};
+    discCell.innerHTML = '<span class="disc-badge ' + (info.cls || '') + '">' + (info.label || disc) + '</span>';
+    discCell.classList.add('auto-filled');
+    setTimeout(() => discCell.classList.remove('auto-filled'), 500);
+  }
+
+  // 填充发展阶段
+  const stageCell = document.getElementById('stage_' + row);
+  if (stageCell) {
+    const sInfo = stageMap[stageCode] || { label: stageText };
+    stageCell.innerHTML = '<span class="stage-badge">' + sInfo.label + '</span>';
+    stageCell.classList.add('auto-filled');
+    setTimeout(() => stageCell.classList.remove('auto-filled'), 500);
+  }
+
+  // 更新下一行
+  currentFillRow = row + 1;
+  if (currentFillRow > 8) currentFillRow = 1;
+
+  // 重置选择器
+  document.getElementById('empSelect').value = '';
+}
+</script>
+
+</body>
+</html>
