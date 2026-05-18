@@ -224,7 +224,12 @@
     border-collapse: collapse;
     font-size: 14px;
   }
-  .record-table thead { position: sticky; top: 122px; z-index: 28; }
+  /* Sticky applied to individual th cells for cross-browser reliability */
+  .record-table th {
+    position: sticky;
+    top: 122px;
+    z-index: 28;
+  }
   .record-table th {
     background: #1976D2;
     color: white;
