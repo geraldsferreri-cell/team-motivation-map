@@ -10,21 +10,17 @@
   body {
     font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
     background: linear-gradient(135deg, #FFF8E7 0%, #FFE8A3 50%, #FFD54F 100%);
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    padding: 16px 20px;
+    min-height: 100vh;
+    padding: 40px 20px;
     color: #333;
-    overflow: hidden;
   }
-  .container { max-width: 1200px; margin: 0 auto; flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+  .container { max-width: 1200px; margin: 0 auto; }
 
   /* ===== Header ===== */
   .header {
     text-align: center;
-    margin-bottom: 16px;
+    margin-bottom: 40px;
     position: relative;
-    flex-shrink: 0;
   }
   .header-badge {
     display: inline-block;
@@ -62,11 +58,10 @@
     background: white;
     border-radius: 24px;
     padding: 36px 40px;
+    margin-bottom: 32px;
     box-shadow: 0 8px 32px rgba(0,0,0,0.08);
     position: relative;
     overflow: hidden;
-    min-height: 60px;
-    flex: 1 1 0%;
   }
   .section::before {
     content: '';
@@ -75,64 +70,6 @@
     height: 5px;
   }
   .section-map::before { background: linear-gradient(90deg, #E65100, #F57C00, #FFB300, #FFD54F); }
-  .section-map,
-  .section-summary {
-    overflow-y: auto;
-  }
-  .section-record {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    flex: 1.2 1 0%;
-  }
-  .section-record .record-table-wrap {
-    overflow: auto;
-    flex: 1;
-  }
-  .section-record::before { background: linear-gradient(90deg, #1976D2, #42A5F5); }
-  .section-summary::before { background: linear-gradient(90deg, #7B1FA2, #AB47BC); }
-
-  /* ===== Main Content Layout (resizable sections) ===== */
-  .main-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-  .resize-handle {
-    height: 12px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: row-resize;
-    background: transparent;
-    position: relative;
-    z-index: 20;
-    transition: background 0.2s;
-  }
-  .resize-handle::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 48px;
-    height: 4px;
-    background: #CCC;
-    border-radius: 2px;
-    transition: all 0.2s;
-  }
-  .resize-handle:hover,
-  .resize-handle.active {
-    background: rgba(25, 118, 210, 0.06);
-  }
-  .resize-handle:hover::before,
-  .resize-handle.active::before {
-    background: #1976D2;
-    width: 72px;
-    box-shadow: 0 1px 6px rgba(25,118,210,0.3);
-  }
-  }
   .section-record::before { background: linear-gradient(90deg, #1976D2, #42A5F5); }
   .section-summary::before { background: linear-gradient(90deg, #7B1FA2, #AB47BC); }
 
@@ -143,9 +80,6 @@
     display: flex;
     align-items: center;
     gap: 12px;
-  }
-  .section-record .section-title {
-    flex-shrink: 0;
   }
   .section-num {
     display: inline-flex;
@@ -271,9 +205,17 @@
   }
 
   /* ===== Record Table ===== */
+  .section-record {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 120px);
+    overflow: hidden;
+  }
   .record-table-wrap {
     overflow-x: auto;
     position: relative;
+    flex: 1;
+    overflow-y: auto;
   }
   .record-table {
     width: 100%;
@@ -455,19 +397,15 @@
 
   .footer {
     text-align: center;
-    margin-top: 8px;
+    margin-top: 32px;
     color: #999;
     font-size: 13px;
-    flex-shrink: 0;
   }
   .footer span { color: #1976D2; font-weight: 600; }
 
   @media print {
-    body { background: white; padding: 20px; height: auto; overflow: visible; display: block; }
-    .container { display: block; overflow: visible; }
-    .main-content { display: block; overflow: visible; }
-    .resize-handle { display: none; }
-    .section { break-inside: avoid; box-shadow: none; border: 1px solid #EEE; flex: none; height: auto; overflow: visible; }
+    body { background: white; padding: 20px; }
+    .section { break-inside: avoid; box-shadow: none; border: 1px solid #EEE; }
     .selector-area { display: none; }
     .input-cell input,
     .input-cell textarea { border-style: solid; }
@@ -486,9 +424,6 @@
     <h1>📋 有效激励 · 课后作业</h1>
     <h2>不用发红包，照样带好团队</h2>
   </div>
-
-  <!-- ========== Resizable Sections ========== -->
-  <div class="main-content">
 
   <!-- ========== Part 1: 员工激励地图 ========== -->
   <div class="section section-map">
@@ -648,7 +583,6 @@
     </p>
   </div>
 
-  <div class="resize-handle" title="拖拽调节上方板块大小"></div>
   <!-- ========== Part 2: 一周激励实践记录表 ========== -->
   <div class="section section-record">
     <div class="section-title">
@@ -800,7 +734,6 @@
     </div>
   </div>
 
-  <div class="resize-handle" title="拖拽调节上方板块大小"></div>
   <!-- ========== Part 3: 团队画像总览 & 激励速查卡 ========== -->
   <div class="section section-summary">
     <div class="section-title">
@@ -868,7 +801,6 @@
       </div>
     </div>
   </div>
-  </div><!-- end main-content -->
 
   <div class="footer">
     有效激励，从今天开始实践！ | 共 <span>19</span> 名团队成员 · 方片新媒体管理夜校课后作业
@@ -891,9 +823,7 @@ function saveData() {
     const tr = document.querySelector('tr[data-row="' + i + '"]');
     if (tr) {
       const inputs = tr.querySelectorAll('input[type="text"]');
-      // input[0]=日期, input[1]=结果, input[2]=方式
       inputs.forEach(function(inp, idx) { data['row' + i + '_input_' + idx] = inp.value; });
-      // textarea[0]=具体事件 (summary is div, skip)
       const textareas = tr.querySelectorAll('textarea');
       textareas.forEach(function(ta, idx) { data['row' + i + '_textarea_' + idx] = ta.value; });
     }
@@ -909,7 +839,6 @@ function restoreData() {
     var data = JSON.parse(raw);
 
     for (let i = 1; i <= 8; i++) {
-      // Restore name / disc / stage cells
       if (data['name_html_' + i]) {
         var el = document.getElementById('name_' + i);
         if (el) el.innerHTML = data['name_html_' + i];
@@ -922,7 +851,6 @@ function restoreData() {
         var el3 = document.getElementById('stage_' + i);
         if (el3) el3.innerHTML = data['stage_html_' + i];
       }
-      // Restore inputs & textareas
       var tr = document.querySelector('tr[data-row="' + i + '"]');
       if (tr) {
         var inputs = tr.querySelectorAll('input[type="text"]');
@@ -947,7 +875,6 @@ function generateSummary(rowNum) {
 
   var nameEl = document.getElementById('name_' + rowNum);
   var nameText = nameEl ? nameEl.textContent.trim() : '';
-  // 过滤掉 emoji 和 "选填" / "待选择"
   nameText = nameText.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, '').replace(/[\u2600-\u27BF]/g, '').trim();
   if (nameText === '待选择' || nameText === '选填') nameText = '';
 
@@ -962,7 +889,6 @@ function generateSummary(rowNum) {
   var summaryEl = document.getElementById('summary_' + rowNum);
   if (!summaryEl) return;
 
-  // 统计是否有填写内容
   var hasAny = dateStr || eventStr || resultStr || methodStr;
   if (!hasAny) {
     summaryEl.textContent = '';
@@ -970,7 +896,6 @@ function generateSummary(rowNum) {
     return;
   }
 
-  // 按带小标题的格式拼接
   var lines = [];
   if (nameText) {
     lines.push('激励对象：' + nameText);
@@ -1010,27 +935,22 @@ document.getElementById('recordTable').addEventListener('input', function(e) {
   if (tr) {
     var row = parseInt(tr.getAttribute('data-row'), 10);
     if (!isNaN(row)) {
-      // 延迟生成总结（防抖）
       clearTimeout(window._summaryTimer);
       window._summaryTimer = setTimeout(function() { generateSummary(row); }, 400);
     }
   }
 
-  // 用防抖避免频繁写入 localStorage
   clearTimeout(window._saveTimer);
   window._saveTimer = setTimeout(saveData, 300);
 });
 
-// 员工选择器变化后也保存并生成总结
-// ===== 原有逻辑 =====
+// ===== 员工选择器填充逻辑 =====
 
-// 当前填充到哪一行
 let currentFillRow = 1;
 
 function fillEmployee(value) {
   if (!value) return;
 
-  // 找到下一个空行（姓名还是"待选择"状态的）
   let row = null;
   for (let i = 1; i <= 8; i++) {
     const nameEl = document.getElementById('name_' + i);
@@ -1041,21 +961,18 @@ function fillEmployee(value) {
   }
   if (!row) row = currentFillRow;
 
-  // 解析数据
   const parts = value.split(',');
   const name = parts[0];
   const disc = parts[1].toUpperCase();
   const stageText = parts[2];
   const stageCode = parts[3];
 
-  // DISC 映射
   const discMap = {
     'D': { label: 'D 老虎', icon: '🐯', cls: 'disc-d' },
     'I': { label: 'I 孔雀', icon: '🦚', cls: 'disc-i' },
     'S': { label: 'S 考拉', icon: '🐨', cls: 'disc-s' },
     'C': { label: 'C 猫头鹰', icon: '🦉', cls: 'disc-c' }
   };
-  // Stage 映射
   const stageMap = {
     'D1': { label: 'D1 学习者' },
     'D2': { label: 'D2 初做者' },
@@ -1063,7 +980,6 @@ function fillEmployee(value) {
     'D4': { label: 'D4 熟手' }
   };
 
-  // 填充姓名
   const nameCell = document.getElementById('name_' + row);
   if (nameCell) {
     const discInfo = discMap[disc] || {};
@@ -1072,7 +988,6 @@ function fillEmployee(value) {
     setTimeout(() => nameCell.classList.remove('auto-filled'), 500);
   }
 
-  // 填充 DISC 类型
   const discCell = document.getElementById('disc_' + row);
   if (discCell) {
     const info = discMap[disc] || {};
@@ -1081,7 +996,6 @@ function fillEmployee(value) {
     setTimeout(() => discCell.classList.remove('auto-filled'), 500);
   }
 
-  // 填充发展阶段
   const stageCell = document.getElementById('stage_' + row);
   if (stageCell) {
     const sInfo = stageMap[stageCode] || { label: stageText };
@@ -1090,111 +1004,14 @@ function fillEmployee(value) {
     setTimeout(() => stageCell.classList.remove('auto-filled'), 500);
   }
 
-  // 更新下一行
   currentFillRow = row + 1;
   if (currentFillRow > 8) currentFillRow = 1;
 
-  // 重置选择器
   document.getElementById('empSelect').value = '';
 
-  // 选择员工后立即保存 + 生成该行的总结
   saveData();
   generateSummary(row);
 }
-
-// ===== 板块大小拖拽调节 =====
-(function() {
-  var mainContent = document.querySelector('.main-content');
-  if (!mainContent) return;
-  var sections = mainContent.querySelectorAll(':scope > .section');
-  var handles = mainContent.querySelectorAll('.resize-handle');
-  var HEIGHT_KEY = 'motivation_map_section_heights';
-
-  var dragging = false;
-  var activeIdx = -1;
-  var startY = 0;
-  var startH = [];
-
-  function getH(sec) { return sec.getBoundingClientRect().height; }
-
-  handles.forEach(function(h) {
-    h.addEventListener('mousedown', onDown);
-    h.addEventListener('touchstart', onDown, { passive: false });
-  });
-
-  function onDown(e) {
-    e.preventDefault();
-    var idx = Array.prototype.indexOf.call(handles, this);
-    dragging = true;
-    activeIdx = idx;
-    startY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
-    startH = [];
-    sections.forEach(function(s) { startH.push(getH(s)); });
-    this.classList.add('active');
-    document.body.style.cursor = 'row-resize';
-    document.body.style.userSelect = 'none';
-    document.body.style.webkitUserSelect = 'none';
-  }
-
-  document.addEventListener('mousemove', onMove);
-  document.addEventListener('touchmove', onMove, { passive: false });
-
-  function onMove(e) {
-    if (!dragging) return;
-    e.preventDefault();
-    var y = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
-    var dy = y - startY;
-    var above = sections[activeIdx];
-    var below = sections[activeIdx + 1];
-    var newAbove = Math.max(60, startH[activeIdx] + dy);
-    var newBelow = Math.max(60, startH[activeIdx + 1] - dy);
-    above.style.flex = 'none';
-    above.style.height = newAbove + 'px';
-    below.style.flex = 'none';
-    below.style.height = newBelow + 'px';
-  }
-
-  document.addEventListener('mouseup', onUp);
-  document.addEventListener('touchend', onUp);
-
-  function onUp() {
-    if (!dragging) return;
-    dragging = false;
-    handles[activeIdx].classList.remove('active');
-    document.body.style.cursor = '';
-    document.body.style.userSelect = '';
-    document.body.style.webkitUserSelect = '';
-    saveHeights();
-  }
-
-  function saveHeights() {
-    var h = [];
-    sections.forEach(function(s) { h.push(Math.round(getH(s))); });
-    try { localStorage.setItem(HEIGHT_KEY, JSON.stringify(h)); } catch(e) {}
-  }
-
-  // 双击手柄恢复默认等分
-  handles.forEach(function(h, i) {
-    h.addEventListener('dblclick', function() {
-      sections[i].style.flex = '';
-      sections[i].style.height = '';
-      sections[i + 1].style.flex = '';
-      sections[i + 1].style.height = '';
-      try { localStorage.removeItem(HEIGHT_KEY); } catch(e) {}
-    });
-  });
-
-  // 恢复保存的高度
-  try {
-    var saved = JSON.parse(localStorage.getItem(HEIGHT_KEY));
-    if (saved && saved.length === sections.length) {
-      sections.forEach(function(s, i) {
-        s.style.flex = 'none';
-        s.style.height = saved[i] + 'px';
-      });
-    }
-  } catch(e) {}
-})();
 </script>
 
 </body>
