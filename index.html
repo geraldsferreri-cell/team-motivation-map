@@ -785,6 +785,79 @@
 </div>
 
 <script>
+const STORAGE_KEY = 'motivation_map_v2';
+
+// ===== localStorage 自动保存 / 恢复 =====
+
+function saveData() {
+  const data = {};
+  for (let i = 1; i <= 8; i++) {
+    data['name_html_' + i] = document.getElementById('name_' + i) ? document.getElementById('name_' + i).innerHTML : '';
+    data['disc_html_' + i] = document.getElementById('disc_' + i) ? document.getElementById('disc_' + i).innerHTML : '';
+    data['stage_html_' + i] = document.getElementById('stage_' + i) ? document.getElementById('stage_' + i).innerHTML : '';
+    // inputs & textareas in this row
+    const tr = document.querySelector('tr[data-row="' + i + '"]');
+    if (tr) {
+      const inputs = tr.querySelectorAll('input[type="text"]');
+      const textareas = tr.querySelectorAll('textarea');
+      inputs.forEach(function(inp, idx) { data['row' + i + '_input_' + idx] = inp.value; });
+      textareas.forEach(function(ta, idx) { data['row' + i + '_textarea_' + idx] = ta.value; });
+    }
+  }
+  data['currentFillRow'] = currentFillRow;
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
+}
+
+function restoreData() {
+  try {
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    var data = JSON.parse(raw);
+
+    for (let i = 1; i <= 8; i++) {
+      // Restore name / disc / stage cells
+      if (data['name_html_' + i]) {
+        var el = document.getElementById('name_' + i);
+        if (el) el.innerHTML = data['name_html_' + i];
+      }
+      if (data['disc_html_' + i]) {
+        var el2 = document.getElementById('disc_' + i);
+        if (el2) el2.innerHTML = data['disc_html_' + i];
+      }
+      if (data['stage_html_' + i]) {
+        var el3 = document.getElementById('stage_' + i);
+        if (el3) el3.innerHTML = data['stage_html_' + i];
+      }
+      // Restore inputs & textareas
+      var tr = document.querySelector('tr[data-row="' + i + '"]');
+      if (tr) {
+        var inputs = tr.querySelectorAll('input[type="text"]');
+        var textareas = tr.querySelectorAll('textarea');
+        inputs.forEach(function(inp, idx) {
+          if (data['row' + i + '_input_' + idx] !== undefined) inp.value = data['row' + i + '_input_' + idx];
+        });
+        textareas.forEach(function(ta, idx) {
+          if (data['row' + i + '_textarea_' + idx] !== undefined) ta.value = data['row' + i + '_textarea_' + idx];
+        });
+      }
+    }
+    if (data['currentFillRow']) currentFillRow = data['currentFillRow'];
+  } catch(e) {}
+}
+
+// 页面加载时恢复数据
+document.addEventListener('DOMContentLoaded', restoreData);
+
+// 自动保存：监听所有输入变化（用事件委托）
+document.getElementById('recordTable').addEventListener('input', function() {
+  // 用防抖避免频繁写入
+  clearTimeout(window._saveTimer);
+  window._saveTimer = setTimeout(saveData, 300);
+});
+
+// 员工选择器变化后也保存（fillEmployee 内部触发 input 不会自动覆盖 innerHTML，所以手动调一次）
+// ===== 原有逻辑 =====
+
 // 当前填充到哪一行
 let currentFillRow = 1;
 
@@ -857,6 +930,9 @@ function fillEmployee(value) {
 
   // 重置选择器
   document.getElementById('empSelect').value = '';
+
+  // 选择员工后立即保存
+  saveData();
 }
 </script>
 
