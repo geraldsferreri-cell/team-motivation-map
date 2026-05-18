@@ -70,6 +70,16 @@
     height: 5px;
   }
   .section-map::before { background: linear-gradient(90deg, #E65100, #F57C00, #FFB300, #FFD54F); }
+  .section-record {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 120px);
+    overflow: hidden;
+  }
+  .section-record .record-table-wrap {
+    overflow: auto;
+    flex: 1;
+  }
   .section-record::before { background: linear-gradient(90deg, #1976D2, #42A5F5); }
   .section-summary::before { background: linear-gradient(90deg, #7B1FA2, #AB47BC); }
 
@@ -82,13 +92,7 @@
     gap: 12px;
   }
   .section-record .section-title {
-    position: sticky;
-    top: 0;
-    z-index: 30;
-    background: white;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    margin-bottom: 20px;
+    flex-shrink: 0;
   }
   .section-num {
     display: inline-flex;
@@ -224,12 +228,6 @@
     border-collapse: collapse;
     font-size: 14px;
   }
-  /* Sticky applied to individual th cells for cross-browser reliability */
-  .record-table th {
-    position: sticky;
-    top: 122px;
-    z-index: 28;
-  }
   .record-table th {
     background: #1976D2;
     color: white;
@@ -237,6 +235,9 @@
     text-align: center;
     font-weight: 600;
     font-size: 13px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
   }
   .record-table td {
     padding: 12px 10px;
@@ -256,9 +257,7 @@
     background: #F0F7FF;
     border-radius: 12px;
     border-left: 4px solid #1976D2;
-    position: sticky;
-    top: 54px;
-    z-index: 29;
+    flex-shrink: 0;
   }
   .selector-area label {
     font-weight: 700;
