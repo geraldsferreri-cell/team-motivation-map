@@ -306,6 +306,32 @@
   }
   .input-cell textarea { resize: vertical; min-height: 44px; }
 
+  /* ===== Summary column textarea (large with scrollbar) ===== */
+  .summary-cell {
+    min-width: 180px;
+  }
+  .summary-textarea {
+    width: 100%;
+    min-height: 80px;
+    max-height: 160px;
+    border: 2px dashed #CCC;
+    border-radius: 8px;
+    padding: 10px;
+    font-family: inherit;
+    font-size: 13px;
+    background: #FAFAFA;
+    outline: none;
+    resize: vertical;
+    overflow-y: auto;
+    line-height: 1.6;
+    transition: all 0.3s;
+  }
+  .summary-textarea:focus {
+    border-color: #1976D2;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(25,118,210,0.1);
+  }
+
   /* Auto-fill highlight */
   .auto-filled {
     animation: fadeIn 0.4s ease;
@@ -588,7 +614,7 @@
             <th style="min-width:160px">具体事件（说行为）</th>
             <th style="min-width:130px">带来的结果（说影响）</th>
             <th style="min-width:110px">使用的激励方式</th>
-            <th style="min-width:100px">下次计划</th>
+            <th style="min-width:160px">总结</th>
           </tr>
         </thead>
         <tbody>
@@ -601,7 +627,7 @@
             <td class="input-cell"><textarea placeholder="例如：独立完成了XXX项目统筹..."></textarea></td>
             <td class="input-cell"><input type="text" placeholder="例如：提前X天交付/零差错..."></td>
             <td class="input-cell"><input type="text" placeholder="例如：荣誉+授权"></td>
-            <td class="input-cell"><input type="text" placeholder=""></td>
+            <td class="input-cell summary-cell"><textarea class="summary-textarea" placeholder="总结本次激励效果，回顾具体事件、结果、激励方式..."></textarea></td>
           </tr>
           <tr data-row="2">
             <td><b>2</b></td>
@@ -612,7 +638,7 @@
             <td class="input-cell"><textarea placeholder=""></textarea></td>
             <td class="input-cell"><input type="text" placeholder=""></td>
             <td class="input-cell"><input type="text" placeholder=""></td>
-            <td class="input-cell"><input type="text" placeholder=""></td>
+            <td class="input-cell summary-cell"><textarea class="summary-textarea" placeholder=""></textarea></td>
           </tr>
           <tr data-row="3">
             <td><b>3</b></td>
@@ -623,7 +649,7 @@
             <td class="input-cell"><textarea placeholder=""></textarea></td>
             <td class="input-cell"><input type="text" placeholder=""></td>
             <td class="input-cell"><input type="text" placeholder=""></td>
-            <td class="input-cell"><input type="text" placeholder=""></td>
+            <td class="input-cell summary-cell"><textarea class="summary-textarea" placeholder=""></textarea></td>
           </tr>
           <tr data-row="4">
             <td><b>4</b></td>
@@ -634,7 +660,7 @@
             <td class="input-cell"><textarea placeholder=""></textarea></td>
             <td class="input-cell"><input type="text" placeholder=""></td>
             <td class="input-cell"><input type="text" placeholder=""></td>
-            <td class="input-cell"><input type="text" placeholder=""></td>
+            <td class="input-cell summary-cell"><textarea class="summary-textarea" placeholder=""></textarea></td>
           </tr>
           <tr data-row="5">
             <td><b>5</b></td>
@@ -645,7 +671,7 @@
             <td class="input-cell"><textarea placeholder=""></textarea></td>
             <td class="input-cell"><input type="text" placeholder=""></td>
             <td class="input-cell"><input type="text" placeholder=""></td>
-            <td class="input-cell"><input type="text" placeholder=""></td>
+            <td class="input-cell summary-cell"><textarea class="summary-textarea" placeholder=""></textarea></td>
           </tr>
           <tr data-row="6">
             <td><b>6</b></td>
@@ -656,7 +682,7 @@
             <td class="input-cell"><textarea placeholder=""></textarea></td>
             <td class="input-cell"><input type="text" placeholder=""></td>
             <td class="input-cell"><input type="text" placeholder=""></td>
-            <td class="input-cell"><input type="text" placeholder=""></td>
+            <td class="input-cell summary-cell"><textarea class="summary-textarea" placeholder=""></textarea></td>
           </tr>
           <!-- 备用行 -->
           <tr data-row="7" style="opacity:0.45;">
@@ -667,7 +693,7 @@
             <td class="input-cell"><textarea placeholder=""></textarea></td>
             <td class="input-cell"><input type="text" placeholder=""></td>
             <td class="input-cell"><input type="text" placeholder=""></td>
-            <td class="input-cell"><input type="text" placeholder=""></td>
+            <td class="input-cell summary-cell"><textarea class="summary-textarea" placeholder=""></textarea></td>
           </tr>
           <tr data-row="8" style="opacity:0.35;">
             <td><b>8</b></td>
@@ -677,7 +703,7 @@
             <td class="input-cell"><textarea placeholder=""></textarea></td>
             <td class="input-cell"><input type="text" placeholder=""></td>
             <td class="input-cell"><input type="text" placeholder=""></td>
-            <td class="input-cell"><input type="text" placeholder=""></td>
+            <td class="input-cell summary-cell"><textarea class="summary-textarea" placeholder=""></textarea></td>
           </tr>
         </tbody>
       </table>
