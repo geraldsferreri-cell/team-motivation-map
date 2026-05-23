@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -299,44 +298,99 @@
 
 /* ==================== Course 2: Interview Cards ==================== */
 .interview-card {
-  background: #FAFAFA; border-radius: 14px; padding: 22px;
-  margin-bottom: 16px; border: 1px solid #EEE; position: relative;
+  background: #FAFAFA; border-radius: 16px; padding: 0;
+  margin-bottom: 20px; border: 1px solid #EEE; position: relative;
+  overflow: hidden;
 }
 .interview-header {
-  display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px;
+  background: linear-gradient(90deg, #C62828, #EF5350);
+  color: white;
 }
 .interview-num {
-  font-size: 15px; font-weight: 700; color: #C62828;
+  font-size: 15px; font-weight: 700; color: white;
 }
 .remove-btn {
-  background: none; border: 1px solid #DDD; border-radius: 6px;
-  padding: 4px 10px; cursor: pointer; font-size: 12px; color: #999;
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); border-radius: 6px;
+  padding: 4px 10px; cursor: pointer; font-size: 12px; color: white;
   transition: all 0.2s;
 }
-.remove-btn:hover { background: #FFEBEE; border-color: #EF9A9A; color: #C62828; }
-.interview-fields { display: flex; flex-direction: column; gap: 14px; }
+.remove-btn:hover { background: rgba(255,255,255,0.3); }
+.interview-body { padding: 20px; display: flex; flex-direction: column; gap: 0; }
+
+/* 分区块 */
+.iv-section {
+  border-radius: 10px; padding: 14px 16px; margin-bottom: 14px;
+}
+.iv-section-title {
+  font-size: 13px; font-weight: 700; color: #555;
+  margin-bottom: 12px; padding-bottom: 7px;
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+  display: flex; align-items: center; gap: 6px;
+}
+.iv-section-A { background: #F8F9FA; border: 1px solid #E9ECEF; }
+.iv-section-B { background: #FFF8F8; border: 1px solid #FFCDD2; }
+.iv-section-C { background: #F3F8FF; border: 1px solid #BBDEFB; }
+.iv-section-D { background: #F0FFF4; border: 1px solid #C8E6C9; }
+
 .field-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.field-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .field-group { display: flex; flex-direction: column; gap: 5px; }
 .field-group.full-width { grid-column: 1 / -1; }
 .field-group label {
-  font-size: 12.5px; font-weight: 600; color: #555;
+  font-size: 12px; font-weight: 600; color: #666;
 }
 .field-group input, .field-group select, .field-group textarea {
-  padding: 9px 12px; border: 2px solid #E0E0E0; border-radius: 8px;
+  padding: 8px 11px; border: 1.5px solid #E0E0E0; border-radius: 7px;
   font-family: inherit; font-size: 13px; outline: none;
   transition: border-color 0.2s; background: white;
 }
 .field-group input:focus, .field-group select:focus, .field-group textarea:focus {
-  border-color: #00897B;
+  border-color: #E53935;
 }
-.field-group textarea { resize: vertical; min-height: 60px; }
+.field-group textarea { resize: vertical; min-height: 56px; }
+
+/* 信号灯分析行 */
+.light-analysis-row { display: grid; grid-template-columns: 80px 1fr 1fr; gap: 10px; align-items: start; margin-bottom: 8px; }
+.light-tag {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 5px 10px; border-radius: 18px; font-size: 12px; font-weight: 700;
+  white-space: nowrap;
+}
+.lt-green { background: #E8F5E9; color: #2E7D32; }
+.lt-yellow { background: #FFF8E1; color: #F57F17; }
+.lt-red { background: #FFEBEE; color: #C62828; }
+
+/* 行动方案迷你表格 */
+.action-mini-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 8px; }
+.action-mini-table th {
+  background: #E8F5E9; color: #2E7D32; padding: 7px 9px;
+  text-align: center; font-size: 11.5px; font-weight: 600;
+}
+.action-mini-table td {
+  padding: 6px 8px; border-bottom: 1px solid #EEE; border-right: 1px solid #EEE;
+}
+.action-mini-table td:last-child { border-right: none; }
+.action-mini-table input {
+  width: 100%; border: none; outline: none; font-family: inherit; font-size: 12px;
+  background: transparent; padding: 2px 0;
+}
+.add-action-row {
+  margin-top: 6px; padding: 5px; text-align: center;
+  color: #78909C; font-size: 12px; cursor: pointer;
+  background: #F9FBE7; border-radius: 6px; border: 1px dashed #C5E1A5;
+  transition: all 0.2s;
+}
+.add-action-row:hover { background: #F1F8E9; color: #2E7D32; }
+
 .add-btn {
   display: block; width: 100%; padding: 12px;
   background: white; border: 2px dashed #B0BEC5; border-radius: 10px;
   font-size: 14px; font-weight: 600; color: #78909C;
   cursor: pointer; transition: all 0.2s;
 }
-.add-btn:hover { border-color: #00897B; color: #00897B; background: #E0F2F1; }
+.add-btn:hover { border-color: #E53935; color: #E53935; background: #FFF8F8; }
 
 /* ==================== Footer ==================== */
 .footer {
@@ -833,23 +887,107 @@ function addInterview(data) {
   var container = document.getElementById('interviewForms');
   if (!container) return;
   var idx = container.children.length + 1;
+  var d = data || {};
   var opts = EMP_C2.map(function(e) {
-    return '<option value="' + e.name + '"' + (data && data.person === e.name ? ' selected' : '') + '>' + e.icon + ' ' + e.name + '</option>';
+    return '<option value="' + e.name + '"' + (d.person === e.name ? ' selected' : '') + '>' + e.icon + ' ' + e.name + '</option>';
   }).join('');
+
+  // Build action rows
+  var actionRows = '';
+  var actions = d.actions && d.actions.length ? d.actions : [['','','','']];
+  actions.forEach(function(a) {
+    actionRows += '<tr>'
+      + '<td><input type="text" class="iv-action-item" value="' + (a[0]||'') + '" placeholder="如：选题优化、数据复盘..."></td>'
+      + '<td><input type="text" class="iv-action-owner" value="' + (a[1]||'') + '" placeholder="责任人"></td>'
+      + '<td><input type="text" class="iv-action-due" value="' + (a[2]||'') + '" placeholder="完成时间"></td>'
+      + '<td><input type="text" class="iv-action-metric" value="' + (a[3]||'') + '" placeholder="衡量标准"></td>'
+      + '</tr>';
+  });
+
   var card = document.createElement('div');
   card.className = 'interview-card';
-  card.innerHTML = '<div class="interview-header"><span class="interview-num">面谈 #' + idx + '</span><button type="button" class="remove-btn" onclick="removeInterview(this)">✕ 删除</button></div>'
-    + '<div class="interview-fields">'
-    +   '<div class="field-row">'
-    +     '<div class="field-group"><label>面谈对象</label><select class="field-input iv-person"><option value="">请选择员工</option>' + opts + '</select></div>'
-    +     '<div class="field-group"><label>面谈日期</label><input type="text" class="field-input iv-date" placeholder="____月__日" value="' + (data ? (data.date||'') : '') + '"></div>'
-    +     '<div class="field-group"><label>面谈形式</label><select class="field-input iv-method"><option value="线下"' + (data && data.method==='线下' ? ' selected' : '') + '>线下面对面</option><option value="线上"' + (data && data.method==='线上' ? ' selected' : '') + '>线上沟通</option><option value="非正式"' + (data && data.method==='非正式' ? ' selected' : '') + '>非正式（吃饭/散步）</option></select></div>'
-    +   '</div>'
-    +   '<div class="field-group"><label>🗣 员工倾诉内容 & 情绪表现</label><textarea class="field-input iv-content" placeholder="记录员工说了什么、情绪状态如何、有什么具体诉求...">' + (data ? (data.content||'') : '') + '</textarea></div>'
-    +   '<div class="field-group"><label>🤝 我的回应 & 承诺</label><textarea class="field-input iv-response" placeholder="我是如何回应的？承诺了什么？">' + (data ? (data.response||'') : '') + '</textarea></div>'
-    +   '<div class="field-group"><label>📋 后续行动计划</label><textarea class="field-input iv-action" placeholder="具体的跟进措施、时间节点...">' + (data ? (data.action||'') : '') + '</textarea></div>'
-    + '</div>';
+  card.innerHTML =
+    '<div class="interview-header">'
+    + '<span class="interview-num">📋 面谈记录 #' + idx + '</span>'
+    + '<button type="button" class="remove-btn" onclick="removeInterview(this)">✕ 删除</button>'
+    + '</div>'
+    + '<div class="interview-body">'
+
+    // ── 一、基础信息 ──
+    + '<div class="iv-section iv-section-A">'
+    + '<div class="iv-section-title">📌 一、面谈基础信息</div>'
+    + '<div class="field-row">'
+    +   '<div class="field-group"><label>面谈对象</label><select class="field-input iv-person"><option value="">请选择员工</option>' + opts + '</select></div>'
+    +   '<div class="field-group"><label>岗位 / 部门</label><select class="field-input iv-dept"><option value="编导（剪辑）"' + (d.dept==='编导（剪辑）'?' selected':'') + '>编导（剪辑）</option><option value="校园运营"' + (d.dept==='校园运营'?' selected':'') + '>校园运营</option><option value="运营"' + (d.dept==='运营'?' selected':'') + '>运营</option></select></div>'
+    +   '<div class="field-group"><label>面谈日期</label><input type="text" class="field-input iv-date" placeholder="2026年__月__日" value="' + (d.date||'') + '"></div>'
+    + '</div>'
+    + '<div class="field-row" style="margin-top:10px">'
+    +   '<div class="field-group"><label>面谈人（直属上级 / HR）</label><input type="text" class="field-input iv-interviewer" placeholder="填写面谈人姓名" value="' + (d.interviewer||'') + '"></div>'
+    +   '<div class="field-group"><label>面谈类型</label><select class="field-input iv-method"><option value="线下面对面"' + (d.method==='线下面对面'?' selected':'') + '>线下面对面</option><option value="线上沟通"' + (d.method==='线上沟通'?' selected':'') + '>线上沟通</option><option value="非正式（吃饭/散步）"' + (d.method==='非正式（吃饭/散步）'?' selected':'') + '>非正式（吃饭/散步）</option></select></div>'
+    +   '<div class="field-group"><label>面谈核心目标</label><input type="text" class="field-input iv-goal" placeholder="本次面谈想达成什么？" value="' + (d.goal||'') + '"></div>'
+    + '</div>'
+    + '</div>'
+
+    // ── 二、红绿灯核心分析 ──
+    + '<div class="iv-section iv-section-B">'
+    + '<div class="iv-section-title">🚦 二、红绿灯核心分析</div>'
+    + '<div class="light-analysis-row"><span class="light-tag lt-green">🟢 绿灯<br>亮点</span>'
+    +   '<div class="field-group"><label>具体表现</label><textarea class="field-input iv-green-behavior" placeholder="员工的亮点 / 优势表现...">' + (d.greenBehavior||'') + '</textarea></div>'
+    +   '<div class="field-group"><label>跟进 / 备注</label><textarea class="field-input iv-green-note" placeholder="如何巩固？">' + (d.greenNote||'') + '</textarea></div>'
+    + '</div>'
+    + '<div class="light-analysis-row"><span class="light-tag lt-yellow">🟡 黄灯<br>待改进</span>'
+    +   '<div class="field-group"><label>具体表现</label><textarea class="field-input iv-yellow-behavior" placeholder="数据波动/选题偏差/协作问题...">' + (d.yellowBehavior||'') + '</textarea></div>'
+    +   '<div class="field-group"><label>跟进 / 备注</label><textarea class="field-input iv-yellow-note" placeholder="如何改进？时间节点？">' + (d.yellowNote||'') + '</textarea></div>'
+    + '</div>'
+    + '<div class="light-analysis-row"><span class="light-tag lt-red">🔴 红灯<br>需关注</span>'
+    +   '<div class="field-group"><label>核心问题 / 红线行为</label><textarea class="field-input iv-red-behavior" placeholder="失眠/请假频繁/极端表达...">' + (d.redBehavior||'') + '</textarea></div>'
+    +   '<div class="field-group"><label>问题根源分析</label><textarea class="field-input iv-red-root" placeholder="能力 / 态度 / 资源 / 流程 / 外部环境...">' + (d.redRoot||'') + '</textarea></div>'
+    + '</div>'
+    + '</div>'
+
+    // ── 三、面谈详细记录 ──
+    + '<div class="iv-section iv-section-C">'
+    + '<div class="iv-section-title">🗣 三、面谈详细记录</div>'
+    + '<div class="field-group" style="margin-bottom:10px"><label>近期核心工作产出</label>'
+    +   '<textarea class="field-input iv-output" placeholder="账号数据、内容成果、项目进度等...">' + (d.output||'') + '</textarea></div>'
+    + '<div class="field-row-2">'
+    +   '<div class="field-group"><label>员工反馈与诉求</label><textarea class="field-input iv-feedback" placeholder="员工说了什么？有什么创作资源/培训/协作诉求？">' + (d.feedback||'') + '</textarea></div>'
+    +   '<div class="field-group"><label>面谈人引导与反馈</label><textarea class="field-input iv-guidance" placeholder="我如何引导的？给了什么支持承诺？">' + (d.guidance||'') + '</textarea></div>'
+    + '</div>'
+    + '<div class="field-row-2" style="margin-top:10px">'
+    +   '<div class="field-group"><label>双方达成的共识</label><textarea class="field-input iv-consensus" placeholder="明确达成了哪些共识？">' + (d.consensus||'') + '</textarea></div>'
+    +   '<div class="field-group"><label>分歧 / 待确认事项</label><textarea class="field-input iv-pending" placeholder="还有哪些分歧或悬而未决的事？">' + (d.pending||'') + '</textarea></div>'
+    + '</div>'
+    + '</div>'
+
+    // ── 四、结论与行动方案 ──
+    + '<div class="iv-section iv-section-D">'
+    + '<div class="iv-section-title">✅ 四、结论与行动方案</div>'
+    + '<div class="field-group" style="margin-bottom:12px"><label>面谈核心结论</label>'
+    +   '<textarea class="field-input iv-conclusion" placeholder="总结：这次面谈最核心的结论是什么？">' + (d.conclusion||'') + '</textarea></div>'
+    + '<label style="font-size:12px;font-weight:600;color:#666;display:block;margin-bottom:6px">具体行动方案</label>'
+    + '<table class="action-mini-table"><thead><tr><th>行动项</th><th style="width:90px">责任人</th><th style="width:110px">完成时间</th><th style="width:130px">衡量标准</th></tr></thead>'
+    + '<tbody class="iv-action-tbody">' + actionRows + '</tbody></table>'
+    + '<div class="add-action-row" onclick="addActionRow(this)">＋ 添加行动项</div>'
+    + '<div class="field-group" style="margin-top:12px"><label>后续跟进计划（时间 / 方式 / 责任人）</label>'
+    +   '<textarea class="field-input iv-followup" placeholder="下次跟进时间、方式、负责人...">' + (d.followup||'') + '</textarea></div>'
+    + '</div>'
+
+    + '</div>'; // end interview-body
+
   container.appendChild(card);
+}
+
+function addActionRow(el) {
+  var tbody = el.previousElementSibling.querySelector('.iv-action-tbody');
+  if (!tbody) return;
+  var tr = document.createElement('tr');
+  tr.innerHTML = '<td><input type="text" class="iv-action-item" placeholder="如：选题优化..."></td>'
+    + '<td><input type="text" class="iv-action-owner" placeholder="责任人"></td>'
+    + '<td><input type="text" class="iv-action-due" placeholder="完成时间"></td>'
+    + '<td><input type="text" class="iv-action-metric" placeholder="衡量标准"></td>';
+  tbody.appendChild(tr);
+  saveDataC2();
 }
 
 function removeInterview(btn) {
@@ -866,10 +1004,25 @@ function saveDataC2() {
     data.notes[emp.name] = noteInput ? noteInput.value : '';
   });
   document.querySelectorAll('.interview-card').forEach(function(card) {
-    var f = card.querySelectorAll('.field-input');
+    function v(cls) { var el = card.querySelector('.' + cls); return el ? el.value : ''; }
+    var actions = [];
+    card.querySelectorAll('.iv-action-tbody tr').forEach(function(tr) {
+      actions.push([
+        tr.querySelector('.iv-action-item') ? tr.querySelector('.iv-action-item').value : '',
+        tr.querySelector('.iv-action-owner') ? tr.querySelector('.iv-action-owner').value : '',
+        tr.querySelector('.iv-action-due') ? tr.querySelector('.iv-action-due').value : '',
+        tr.querySelector('.iv-action-metric') ? tr.querySelector('.iv-action-metric').value : ''
+      ]);
+    });
     data.interviews.push({
-      person: f[0].value, date: f[1].value, method: f[2].value,
-      content: f[3].value, response: f[4].value, action: f[5].value
+      person: v('iv-person'), dept: v('iv-dept'), date: v('iv-date'),
+      interviewer: v('iv-interviewer'), method: v('iv-method'), goal: v('iv-goal'),
+      greenBehavior: v('iv-green-behavior'), greenNote: v('iv-green-note'),
+      yellowBehavior: v('iv-yellow-behavior'), yellowNote: v('iv-yellow-note'),
+      redBehavior: v('iv-red-behavior'), redRoot: v('iv-red-root'),
+      output: v('iv-output'), feedback: v('iv-feedback'), guidance: v('iv-guidance'),
+      consensus: v('iv-consensus'), pending: v('iv-pending'),
+      conclusion: v('iv-conclusion'), actions: actions, followup: v('iv-followup')
     });
   });
   try { localStorage.setItem(STORAGE_KEY_C2, JSON.stringify(data)); } catch(e) {}
@@ -880,7 +1033,6 @@ function restoreDataC2() {
     var raw = localStorage.getItem(STORAGE_KEY_C2);
     if (!raw) return;
     var data = JSON.parse(raw);
-    // Restore traffic lights
     if (data.lights) {
       EMP_C2.forEach(function(emp, i) {
         if (data.lights[emp.name]) {
@@ -889,7 +1041,6 @@ function restoreDataC2() {
         }
       });
     }
-    // Restore notes
     if (data.notes) {
       EMP_C2.forEach(function(emp, i) {
         if (data.notes[emp.name]) {
@@ -898,7 +1049,6 @@ function restoreDataC2() {
         }
       });
     }
-    // Restore interviews
     if (data.interviews && data.interviews.length > 0) {
       var container = document.getElementById('interviewForms');
       if (container) container.innerHTML = '';
