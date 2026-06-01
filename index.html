@@ -398,6 +398,134 @@
 }
 .footer span { color: #1976D2; font-weight: 600; }
 
+/* ==================== Course 3: 绩效面谈 ==================== */
+#course-3 { background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 50%, #FFCC80 100%); }
+
+.section-knowledge::before { background: linear-gradient(90deg, #1565C0, #42A5F5); }
+.section-homework-high::before { background: linear-gradient(90deg, #2E7D32, #66BB6A); }
+.section-homework-low::before { background: linear-gradient(90deg, #E65100, #FF9800); }
+
+/* Knowledge cards grid */
+.knowledge-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-bottom: 18px; }
+.knowledge-grid.col2 { grid-template-columns: 1fr 1fr; }
+.knowledge-grid.col3 { grid-template-columns: repeat(3, 1fr); }
+.knowledge-grid.col5 { grid-template-columns: repeat(5, 1fr); }
+.kcard {
+  background: white; border-radius: 14px;
+  padding: 14px 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  border: 1px solid #F0F0F0;
+}
+.kcard h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+.kcard p, .kcard li { font-size: 12.5px; color: #555; line-height: 1.65; }
+.kcard ul { list-style: none; padding: 0; }
+.kcard li { padding: 2px 0 2px 14px; position: relative; }
+.kcard li::before { content: '•'; position: absolute; left: 0; color: #1976D2; font-weight: 800; }
+.kc-blue { border-left: 4px solid #1976D2; }
+.kc-green { border-left: 4px solid #388E3C; }
+.kc-orange { border-left: 4px solid #F57C00; }
+.kc-red { border-left: 4px solid #E53935; }
+.kc-purple { border-left: 4px solid #7B1FA2; }
+.kc-teal { border-left: 4px solid #00897B; }
+
+/* Quote block for employee voices */
+.quote-block {
+  background: linear-gradient(135deg, #FAFAFA, #FFF8E1);
+  border-radius: 14px; padding: 16px 20px;
+  margin-bottom: 18px; border-left: 4px solid #FFA000;
+}
+.quote-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 13px; color: #555; line-height: 1.7;
+  padding: 6px 0; border-bottom: 1px dashed #EEE;
+}
+.quote-item:last-child { border-bottom: none; }
+.quote-icon { flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; background: #FFA000; color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; }
+
+/* Compare cards (两端人群) */
+.compare-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 18px; }
+.cc-high { background: linear-gradient(135deg, #E8F5E9, #C8E6C9); border-radius: 14px; padding: 18px; border: 2px solid #66BB6A; }
+.cc-low { background: linear-gradient(135deg, #FFF3E0, #FFE0B2); border-radius: 14px; padding: 18px; border: 2px solid #FF9800; }
+.cc-high h4, .cc-low h4 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+.cc-do, .cc-dont { font-size: 12.5px; line-height: 1.6; }
+.cc-do { color: #2E7D32; }
+.cc-dont { color: #C62828; }
+.cc-label { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; margin-right: 6px; }
+.cc-label-do { background: #C8E6C9; color: #2E7D32; }
+.cc-label-dont { background: #FFCDD2; color: #C62828; }
+
+/* Steps flow (五步骤) */
+.steps-flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 18px; }
+.step-item {
+  background: white; border-radius: 12px; padding: 14px 10px;
+  text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  position: relative; border-top: 4px solid #1976D2;
+}
+.step-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; background: #1976D2; color: white;
+  border-radius: 50%; font-size: 13px; font-weight: 800; margin-bottom: 6px;
+}
+.step-title { font-size: 13px; font-weight: 700; color: #333; margin-bottom: 3px; }
+.step-desc { font-size: 11px; color: #888; line-height: 1.4; }
+
+/* Avoid pitfall list */
+.pitfall-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 10px; }
+.pitfall-item {
+  display: flex; align-items: flex-start; gap: 8px;
+  background: white; border-radius: 10px; padding: 10px 14px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04); font-size: 12.5px; line-height: 1.6;
+}
+.pitfall-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #E53935; color: white; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; }
+.pitfall-fix { color: #2E7D32; font-weight: 600; }
+
+/* Objective checklist */
+.obj-checklist {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px;
+}
+.obj-item {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; padding: 8px 12px; background: white;
+  border-radius: 9px; cursor: pointer; border: 1px solid #E0E0E0;
+  transition: all 0.2s; user-select: none;
+}
+.obj-item input { display: none; }
+.obj-item:has(input:checked) {
+  border-color: #1976D2; background: #E3F2FD; color: #1565C0; font-weight: 600;
+}
+
+/* Homework form */
+.hw-form { display: flex; flex-direction: column; gap: 14px; }
+.hw-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.hw-row.single { grid-template-columns: 1fr; }
+.hw-row.col3 { grid-template-columns: 1fr 1fr 1fr; }
+.hw-group { display: flex; flex-direction: column; gap: 4px; }
+.hw-group label { font-size: 12px; font-weight: 600; color: #555; }
+.hw-group input, .hw-group textarea, .hw-group select {
+  padding: 9px 12px; border: 1.5px solid #E0E0E0; border-radius: 8px;
+  font-family: inherit; font-size: 13px; outline: none;
+  transition: border-color 0.2s; background: white;
+}
+.hw-group input:focus, .hw-group textarea:focus, .hw-group select:focus { border-color: #F57C00; }
+.hw-group textarea { resize: vertical; min-height: 70px; }
+.hw-subtitle {
+  font-size: 14px; font-weight: 700; color: #555;
+  padding: 8px 14px; background: rgba(255,255,255,0.6);
+  border-radius: 8px; border-left: 4px solid #F57C00; margin-bottom: 4px;
+}
+
+/* Summary textarea larger */
+.hw-group textarea.large { min-height: 100px; }
+
+/* Responsive for course 3 */
+@media (max-width: 768px) {
+  .knowledge-grid.col2, .knowledge-grid.col3, .knowledge-grid.col5 { grid-template-columns: 1fr; }
+  .compare-cards { grid-template-columns: 1fr; }
+  .steps-flow { grid-template-columns: 1fr; }
+  .obj-checklist { grid-template-columns: 1fr 1fr; }
+  .hw-row { grid-template-columns: 1fr; }
+  .hw-row.col3 { grid-template-columns: 1fr; }
+}
+
 /* ==================== Print ==================== */
 @media print {
   .sidebar, .hamburger, .sidebar-overlay { display: none !important; }
@@ -447,6 +575,10 @@
     <a class="nav-item" data-course="2" onclick="showCourse(2)">
       <span class="nav-num">02</span>
       <span class="nav-text">情绪识别与干预 · 让团队从"心累"到"心齐"</span>
+    </a>
+    <a class="nav-item" data-course="3" onclick="showCourse(3)">
+      <span class="nav-num">03</span>
+      <span class="nav-text">绩效面谈 · 用方法论让沟通有据可依</span>
     </a>
     <!-- 未来课程：复制上面的 nav-item，改 data-course 和 nav-num 即可 -->
   </div>
@@ -680,6 +812,232 @@
 
 </div>
 </div><!-- end course-2 -->
+
+
+
+<!-- ==================== 第三期：绩效面谈 ==================== -->
+<div class="course-page" id="course-3">
+<div class="container">
+
+  <div class="header">
+    <div class="header-deco" style="background:#F57C00"></div>
+    <span class="header-badge" style="background:#F57C00">第三期 · 2026.06.01</span>
+    <h1 style="color:#E65100">🎯 绩效面谈 · 课后作业</h1>
+    <h2>用方法论让沟通有据可依，用真诚让管理有温度</h2>
+    <p class="header-sub">核心理念：绩效面谈不是走过场，而是管理者最重要的辅导工具</p>
+  </div>
+
+  <!-- Section 01: 知识要点速览 -->
+  <div class="section section-knowledge">
+    <div class="section-title"><span class="section-num" style="background:#1565C0">01</span>知识要点速览（做作业前先复习）</div>
+
+    <!-- 员工原声 -->
+    <h4 style="font-size:14px;color:#666;margin-bottom:8px;">🗣 缺乏绩效面谈的团队中，员工常有的"原声"：</h4>
+    <div class="quote-block">
+      <div class="quote-item"><span class="quote-icon">1</span>"我只要完成考核/系数就好了，以外的事情跟我无关"</div>
+      <div class="quote-item"><span class="quote-icon">2</span>"考核/系数太多了，不知道哪个是重点"</div>
+      <div class="quote-item"><span class="quote-icon">3</span>"这目标定的不合理啊，根本不考虑一线实际情况吧"</div>
+      <div class="quote-item"><span class="quote-icon">4</span>"跟我聊完就是画饼，就是干，给不到任何支持和指引"</div>
+      <div class="quote-item"><span class="quote-icon">5</span>"达成不好不是我的问题，是签约、商务、自孵等大家的问题"</div>
+    </div>
+
+    <!-- 四大价值 -->
+    <h4 style="font-size:14px;color:#666;margin-bottom:8px;">💎 绩效面谈的四大价值：</h4>
+    <div class="knowledge-grid col2">
+      <div class="kcard kc-blue"><h4>🔧 提供支持并及时纠偏</h4><p>了解员工工作中遇到的障碍，提供支持并及时纠偏</p></div>
+      <div class="kcard kc-green"><h4>📈 帮助改进</h4><p>帮助员工认识到工作中的不足并及时采取措施改进</p></div>
+      <div class="kcard kc-orange"><h4>⭐ 激励持续做出贡献</h4><p>使员工及时了解优点和进展，持续激励积极绩效贡献</p></div>
+      <div class="kcard kc-purple"><h4>⚖️ 为公正绩效评价奠基</h4><p>走进业务、了解员工工作状态和成效、建立信任</p></div>
+    </div>
+
+    <!-- 三阶段框架 -->
+    <h4 style="font-size:14px;color:#666;margin-bottom:8px;">📐 三阶段框架：沟通前 → 沟通中 → 沟通后</h4>
+    <div class="knowledge-grid col3">
+      <div class="kcard kc-blue">
+        <h4>📋 沟通前 · 两准备</h4>
+        <p><strong>内容准备：</strong>回顾关键绩效事件，明确沟通策略</p>
+        <p style="margin-top:6px;"><strong>风险预判：</strong>识别沟通风险点（员工压力、性格、家庭情况等）</p>
+      </div>
+      <div class="kcard kc-teal">
+        <h4>🗣 沟通中 · 五步骤</h4>
+        <div style="display:flex;flex-direction:column;gap:4px;">
+          <div style="padding:5px 0;font-size:12px;"><span style="font-weight:700;color:#1976D2;">① 建立亲和与信任</span> — 营造安全坦诚氛围</div>
+          <div style="padding:5px 0;font-size:12px;"><span style="font-weight:700;color:#1976D2;">② 基于事实反馈</span> — 数据+关键事件，不凭印象</div>
+          <div style="padding:5px 0;font-size:12px;"><span style="font-weight:700;color:#1976D2;">③ 倾听关注+同理感知</span> — 换位思考</div>
+          <div style="padding:5px 0;font-size:12px;"><span style="font-weight:700;color:#1976D2;">④ 面向未来激发成长</span> — 不只谈过去</div>
+          <div style="padding:5px 0;font-size:12px;"><span style="font-weight:700;color:#1976D2;">⑤ 做好记录</span> — 整理后续关注点</div>
+        </div>
+      </div>
+      <div class="kcard kc-green">
+        <h4>📌 沟通后 · 两跟进</h4>
+        <p><strong>进展跟进：</strong>对遗留问题、改进表现进行跟进</p>
+        <p style="margin-top:6px;"><strong>异常跟进与反馈：</strong>确保行动计划落地执行</p>
+      </div>
+    </div>
+
+    <!-- 两端人群 -->
+    <h4 style="font-size:14px;color:#666;margin-bottom:8px;">👥 重视"两端人群"辅导策略：</h4>
+    <div class="compare-cards">
+      <div class="cc-high">
+        <h4>🏆 高绩效员工</h4>
+        <p class="cc-do"><span class="cc-label cc-label-do">✅ 应该做</span></p>
+        <p class="cc-do">• 强调优势，增强信心<br>• 听取个人发展期望和团队建议<br>• 提出更高期望，给挑战性工作<br>• 聚焦进阶提升，承诺帮助和定期关注</p>
+        <p class="cc-dont" style="margin-top:8px;"><span class="cc-label cc-label-dont">❌ 切忌</span></p>
+        <p class="cc-dont">• 默认员工充分被激励，仅告知结果<br>• 忽略员工自我的发展期望<br>• 担心员工自满，刻意给予很多批评</p>
+      </div>
+      <div class="cc-low">
+        <h4>🔧 绩效异常/低绩效人员</h4>
+        <p class="cc-do"><span class="cc-label cc-label-do">✅ 应该做</span></p>
+        <p class="cc-do">• 肯定长处，基于事实说明评价理由<br>• 一起分析绩效偏低因素（态度/知识/技能/环境）<br>• 明确期望，指出需提升的地方<br>• 共同讨论提升计划，提供支持</p>
+        <p class="cc-dont" style="margin-top:8px;"><span class="cc-label cc-label-dont">❌ 切忌</span></p>
+        <p class="cc-dont">• 无准备上场，凭模糊印象沟通<br>• 为说服员工而辩论绩效结果<br>• 以其他借口回避直接主管的责任<br>• 担心员工无法接受，只沟通优点</p>
+      </div>
+    </div>
+
+    <!-- 六大目标 + 八大避坑 -->
+    <h4 style="font-size:14px;color:#666;margin-bottom:8px;">🎯 六大核心目标 & ⚠️ 八大避坑指南：</h4>
+    <div class="knowledge-grid col2">
+      <div class="kcard kc-blue">
+        <h4>六大目标（复→析→认→对→赋→化）</h4>
+        <ul>
+          <li><strong>复盘业绩：</strong>核对周期成果，评定绩效等级，明确优劣差距</li>
+          <li><strong>分析问题：</strong>找出工作短板、流程卡点与能力不足，分析根因</li>
+          <li><strong>认可贡献：</strong>认可贡献与亮点，提振工作积极性，增强归属感</li>
+          <li><strong>对齐目标：</strong>敲定下阶段指标、任务与考核标准</li>
+          <li><strong>赋能成长：</strong>匹配培训、辅导等资源，规划个人发展</li>
+          <li><strong>化解矛盾：</strong>倾听想法困难诉求，建立开放沟通渠道</li>
+        </ul>
+      </div>
+      <div class="kcard kc-red">
+        <h4>八大避坑指南</h4>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;line-height:1.6;"><span style="flex-shrink:0;width:22px;height:22px;border-radius:50%;background:#E53935;color:white;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;">1</span><span>脱离业务纸上谈兵 → <span style="color:#2E7D32;font-weight:600;">深入了解业务实际</span></span></div>
+          <div style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;line-height:1.6;"><span style="flex-shrink:0;width:22px;height:22px;border-radius:50%;background:#E53935;color:white;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;">2</span><span>把责任推给HR → <span style="color:#2E7D32;font-weight:600;">业务主管是第一责任人</span></span></div>
+          <div style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;line-height:1.6;"><span style="flex-shrink:0;width:22px;height:22px;border-radius:50%;background:#E53935;color:white;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;">3</span><span>不提前规划 → <span style="color:#2E7D32;font-weight:600;">提前做时机/场地/数据准备</span></span></div>
+          <div style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;line-height:1.6;"><span style="flex-shrink:0;width:22px;height:22px;border-radius:50%;background:#E53935;color:white;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;">4</span><span>信息不准 → <span style="color:#2E7D32;font-weight:600;">提前收集绩效信息点</span></span></div>
+          <div style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;line-height:1.6;"><span style="flex-shrink:0;width:22px;height:22px;border-radius:50%;background:#E53935;color:white;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;">5</span><span>过度承诺 → <span style="color:#2E7D32;font-weight:600;">承诺必须可兑现</span></span></div>
+          <div style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;line-height:1.6;"><span style="flex-shrink:0;width:22px;height:22px;border-radius:50%;background:#E53935;color:white;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;">6</span><span>千人一面 → <span style="color:#2E7D32;font-weight:600;">根据员工特点选面谈形式</span></span></div>
+          <div style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;line-height:1.6;"><span style="flex-shrink:0;width:22px;height:22px;border-radius:50%;background:#E53935;color:white;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;">7</span><span>当成谈判筹码 → <span style="color:#2E7D32;font-weight:600;">目的是帮助成长</span></span></div>
+          <div style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;line-height:1.6;"><span style="flex-shrink:0;width:22px;height:22px;border-radius:50%;background:#E53935;color:white;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;">8</span><span>只做"审判"不做"牵引" → <span style="color:#2E7D32;font-weight:600;">更多是对未来的牵引改进</span></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 02: 高绩效员工面谈作业 -->
+  <div class="section section-homework-high">
+    <div class="section-title"><span class="section-num" style="background:#2E7D32">02</span>课后作业①：高绩效员工面谈（前20%）</div>
+    <p class="section-desc">选择团队中5月业绩达成进入前20%的1位员工，完成面谈并填写以下记录</p>
+
+    <div class="hw-form" id="hwHighForm">
+      <div class="hw-row col3">
+        <div class="hw-group"><label>面谈对象（姓名）</label><input type="text" class="c3-hw-high-name" placeholder="填写员工姓名"></div>
+        <div class="hw-group"><label>岗位 / 部门</label><input type="text" class="c3-hw-high-dept" placeholder="如：编导（剪辑）"></div>
+        <div class="hw-group"><label>面谈日期</label><input type="text" class="c3-hw-high-date" placeholder="2026年__月__日"></div>
+      </div>
+
+      <div class="hw-subtitle">📋 沟通前 · 两准备</div>
+      <div class="hw-row">
+        <div class="hw-group"><label>内容准备（关键绩效事件、数据回顾、沟通策略）</label><textarea class="c3-hw-high-prep-content" placeholder="复盘了哪些绩效数据？准备了哪些关键事件？沟通策略是什么？"></textarea></div>
+        <div class="hw-group"><label>风险预判（员工压力、性格特点、家庭情况等）</label><textarea class="c3-hw-high-prep-risk" placeholder="该员工有什么需要特别注意的风险点？"></textarea></div>
+      </div>
+
+      <div class="hw-row">
+        <div class="hw-group"><label>面谈场景</label><select class="c3-hw-high-scene"><option value="">选择面谈形式</option><option value="线下面对面">线下面对面（独立会议室）</option><option value="线上沟通">线上沟通</option><option value="非正式">非正式（吃饭/散步）</option></select></div>
+        <div class="hw-group"><label>预留时长</label><input type="text" class="c3-hw-high-duration" placeholder="如：40-60分钟"></div>
+      </div>
+
+      <div class="hw-subtitle">🗣 沟通中 · 五步骤回顾</div>
+      <div class="hw-group"><label>① 建立亲和与信任（开场怎么说的？）</label><textarea class="c3-hw-high-step1" placeholder="例：'5月整体业绩非常出色，今天想花点时间聊聊你是怎么做到的，以及下一步怎么走。'"></textarea></div>
+      <div class="hw-group"><label>② 基于事实反馈（用数据说话，举了哪些具体事件？）</label><textarea class="c3-hw-high-step2" placeholder="回顾了哪些核心指标？具体到哪个项目/哪个周？"></textarea></div>
+      <div class="hw-group"><label>③ 倾听关注+同理感知（员工说了什么？你怎么回应的？）</label><textarea class="c3-hw-high-step3" placeholder="员工最有成就感的时刻？遇到的最大挑战？如何克服的？"></textarea></div>
+      <div class="hw-group"><label>④ 面向未来激发成长（过去→现在→未来怎么谈的？）</label><textarea class="c3-hw-high-step4 large" placeholder="过去：总结5月成功的关键动作（哪些可复制给团队？）
+现在：6月的目标和挑战是什么？需要什么资源？
+未来：Q3的成长方向——是否有兴趣承担新项目/带新人？"></textarea></div>
+      <div class="hw-group"><label>⑤ 做好记录（形成了什么 to-do？什么约定？）</label><textarea class="c3-hw-high-step5" placeholder="记录了什么后续关注点？约定的行动项是什么？"></textarea></div>
+
+      <div class="hw-subtitle">🎯 六大目标达成情况（勾选已达成项）</div>
+      <div class="obj-checklist" id="c3HighObjs">
+        <label class="obj-item"><input type="checkbox" class="c3-hw-high-obj" value="复盘业绩"><span>📊 复盘业绩 — 确认了5月贡献</span></label>
+        <label class="obj-item"><input type="checkbox" class="c3-hw-high-obj" value="分析问题"><span>🔍 分析问题 — 找到了可改进点</span></label>
+        <label class="obj-item"><input type="checkbox" class="c3-hw-high-obj" value="认可贡献"><span>⭐ 认可贡献 — 具体表扬了关键事件</span></label>
+        <label class="obj-item"><input type="checkbox" class="c3-hw-high-obj" value="对齐目标"><span>🎯 对齐目标 — 明确了6月挑战目标</span></label>
+        <label class="obj-item"><input type="checkbox" class="c3-hw-high-obj" value="赋能成长"><span>🌱 赋能成长 — 确定了Q3发展方向和资源</span></label>
+        <label class="obj-item"><input type="checkbox" class="c3-hw-high-obj" value="化解矛盾"><span>🤝 化解矛盾 — 倾听了诉求并回应</span></label>
+      </div>
+
+      <div class="hw-subtitle">📌 沟通后 · 两跟进</div>
+      <div class="hw-row">
+        <div class="hw-group"><label>后续进展跟进计划</label><textarea class="c3-hw-high-followup1" placeholder="对沟通中遗留的问题、员工后续的改进表现如何跟进？"></textarea></div>
+        <div class="hw-group"><label>异常跟进与反馈</label><textarea class="c3-hw-high-followup2" placeholder="如果发现异常情况，如何处理？下次 check-in 时间？"></textarea></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 03: 低绩效员工面谈作业 -->
+  <div class="section section-homework-low">
+    <div class="section-title"><span class="section-num" style="background:#E65100">03</span>课后作业②：低绩效员工面谈（后10%）</div>
+    <p class="section-desc">选择团队中5月业绩达成处于后10%的1位员工，完成面谈并填写以下记录</p>
+
+    <div class="hw-form" id="hwLowForm">
+      <div class="hw-row col3">
+        <div class="hw-group"><label>面谈对象（姓名）</label><input type="text" class="c3-hw-low-name" placeholder="填写员工姓名"></div>
+        <div class="hw-group"><label>岗位 / 部门</label><input type="text" class="c3-hw-low-dept" placeholder="如：编导（剪辑）"></div>
+        <div class="hw-group"><label>面谈日期</label><input type="text" class="c3-hw-low-date" placeholder="2026年__月__日"></div>
+      </div>
+
+      <div class="hw-subtitle">📋 沟通前 · 两准备</div>
+      <div class="hw-row">
+        <div class="hw-group"><label>内容准备（绩效数据、与目标的差距、趋势对比、自查作为主管是否给予足够支持）</label><textarea class="c3-hw-low-prep-content" placeholder="5月业绩数字？与目标的差距？与前几个月的趋势？作为主管自我反思：我给够了支持吗？"></textarea></div>
+        <div class="hw-group"><label>风险预判（员工性格敏感度、是否习惯推卸责任、家庭/经济压力等）</label><textarea class="c3-hw-low-prep-risk" placeholder="该员工有什么需要特别注意的风险点？"></textarea></div>
+      </div>
+
+      <div class="hw-subtitle">🔬 四维度分析法（态度 / 知识 / 技能 / 外界环境）</div>
+      <div class="hw-row">
+        <div class="hw-group"><label>态度因素</label><input type="text" class="c3-hw-low-dim-attitude" placeholder="工作积极性、责任心方面是否存在问题？"></div>
+        <div class="hw-group"><label>知识因素</label><input type="text" class="c3-hw-low-dim-knowledge" placeholder="是否缺乏必要的业务知识或行业理解？"></div>
+      </div>
+      <div class="hw-row">
+        <div class="hw-group"><label>技能因素</label><input type="text" class="c3-hw-low-dim-skill" placeholder="技能是否不匹配或需要培训提升？"></div>
+        <div class="hw-group"><label>外界环境因素</label><input type="text" class="c3-hw-low-dim-env" placeholder="市场、线索质量、协作方、资源等方面是否存在客观困难？"></div>
+      </div>
+
+      <div class="hw-row">
+        <div class="hw-group"><label>面谈场景</label><select class="c3-hw-low-scene"><option value="">选择面谈形式</option><option value="线下面对面">线下面对面（独立会议室）</option><option value="线上沟通">线上沟通</option><option value="非正式">非正式（吃饭/散步）</option></select></div>
+        <div class="hw-group"><label>预留时长</label><input type="text" class="c3-hw-low-duration" placeholder="如：60分钟"></div>
+      </div>
+
+      <div class="hw-subtitle">🗣 沟通中 · 五步骤回顾</div>
+      <div class="hw-group"><label>① 建立亲和与信任（开场怎么说的？如何让员工不防御？）</label><textarea class="c3-hw-low-step1" placeholder="例：'今天的目标不是批评，而是一起找找5月的问题出在哪，以及我能怎么帮你。'"></textarea></div>
+      <div class="hw-group"><label>② 基于事实反馈（先问自评再给观察，区分"事实"和"判断"）</label><textarea class="c3-hw-low-step2" placeholder="他的自评是什么？你补充了哪些事实观察？注意区分事实和判断。"></textarea></div>
+      <div class="hw-group"><label>③ 倾听关注+同理感知（员工最大的阻碍是什么？缺什么支持？）</label><textarea class="c3-hw-low-step3" placeholder="员工觉得哪个环节出了问题？他需要但没得到的支持是什么？"></textarea></div>
+      <div class="hw-group"><label>④ 面向未来激发成长（过去→现在→未来怎么谈的？）</label><textarea class="c3-hw-low-step4 large" placeholder="过去：5月哪个环节出了问题？线索质量/转化率/客单价？
+现在：目前还有哪些可补救的？6月第一周的具体动作？
+未来：接下来30天的改进计划，每周一个小目标+check-in"></textarea></div>
+      <div class="hw-group"><label>⑤ 做好记录（形成了什么 to-do？什么约定？）</label><textarea class="c3-hw-low-step5" placeholder="双方认同的提升计划？你承诺了哪些资源支持？"></textarea></div>
+
+      <div class="hw-subtitle">🎯 六大目标达成情况（勾选已达成项）</div>
+      <div class="obj-checklist" id="c3LowObjs">
+        <label class="obj-item"><input type="checkbox" class="c3-hw-low-obj" value="复盘业绩"><span>📊 复盘业绩 — 用数据回顾了5月达成</span></label>
+        <label class="obj-item"><input type="checkbox" class="c3-hw-low-obj" value="分析问题"><span>🔍 分析问题 — 用四维度定位了根因</span></label>
+        <label class="obj-item"><input type="checkbox" class="c3-hw-low-obj" value="认可贡献"><span>⭐ 认可贡献 — 肯定了员工的长处</span></label>
+        <label class="obj-item"><input type="checkbox" class="c3-hw-low-obj" value="对齐目标"><span>🎯 对齐目标 — 制定了具体改进计划和里程碑</span></label>
+        <label class="obj-item"><input type="checkbox" class="c3-hw-low-obj" value="赋能成长"><span>🌱 赋能成长 — 明确了需要的培训/辅导资源</span></label>
+        <label class="obj-item"><input type="checkbox" class="c3-hw-low-obj" value="化解矛盾"><span>🤝 化解矛盾 — 充分倾听和回应了情绪</span></label>
+      </div>
+
+      <div class="hw-subtitle">📌 沟通后 · 两跟进</div>
+      <div class="hw-row">
+        <div class="hw-group"><label>后续进展跟进计划</label><textarea class="c3-hw-low-followup1" placeholder="改进计划如何跟进？每周check-in的时间和方式？"></textarea></div>
+        <div class="hw-group"><label>异常跟进与反馈</label><textarea class="c3-hw-low-followup2" placeholder="如果一个月后改善不明显，你的下一步计划？"></textarea></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">绩效面谈的核心不是"审判过去"，而是"牵引未来"。 | 方片新媒体管理夜校课后作业</div>
+
+</div>
+</div><!-- end course-3 -->
 
 
 </div><!-- end main-content -->
@@ -1066,6 +1424,84 @@ document.getElementById('course-2').addEventListener('change', function() {
 });
 
 /* ============================================================
+   Course 3: 绩效面谈
+   ============================================================ */
+var STORAGE_KEY_C3 = 'performance_review_v1';
+
+function saveDataC3() {
+  var data = { high: {}, low: {} };
+  // High performer form
+  [
+    'name','dept','date','prep-content','prep-risk','scene','duration',
+    'step1','step2','step3','step4','step5','followup1','followup2'
+  ].forEach(function(field) {
+    var el = document.querySelector('.c3-hw-high-' + field);
+    if (el) { data.high[field] = (el.type === 'select-one') ? (el.selectedIndex >= 0 ? el.options[el.selectedIndex].value : '') : el.value; }
+  });
+  // High objectives checkboxes
+  data.high.objs = [];
+  document.querySelectorAll('.c3-hw-high-obj:checked').forEach(function(cb) { data.high.objs.push(cb.value); });
+
+  // Low performer form
+  [
+    'name','dept','date','prep-content','prep-risk',
+    'dim-attitude','dim-knowledge','dim-skill','dim-env',
+    'scene','duration',
+    'step1','step2','step3','step4','step5','followup1','followup2'
+  ].forEach(function(field) {
+    var el = document.querySelector('.c3-hw-low-' + field);
+    if (el) { data.low[field] = (el.type === 'select-one') ? (el.selectedIndex >= 0 ? el.options[el.selectedIndex].value : '') : el.value; }
+  });
+  // Low objectives checkboxes
+  data.low.objs = [];
+  document.querySelectorAll('.c3-hw-low-obj:checked').forEach(function(cb) { data.low.objs.push(cb.value); });
+
+  try { localStorage.setItem(STORAGE_KEY_C3, JSON.stringify(data)); } catch(e) {}
+}
+
+function restoreDataC3() {
+  try {
+    var raw = localStorage.getItem(STORAGE_KEY_C3);
+    if (!raw) return;
+    var data = JSON.parse(raw);
+    // High
+    if (data.high) {
+      Object.keys(data.high).forEach(function(field) {
+        if (field === 'objs') return;
+        var el = document.querySelector('.c3-hw-high-' + field);
+        if (el) { el.value = data.high[field]; }
+      });
+      if (data.high.objs && data.high.objs.length > 0) {
+        document.querySelectorAll('.c3-hw-high-obj').forEach(function(cb) {
+          if (data.high.objs.indexOf(cb.value) !== -1) cb.checked = true;
+        });
+      }
+    }
+    // Low
+    if (data.low) {
+      Object.keys(data.low).forEach(function(field) {
+        if (field === 'objs') return;
+        var el = document.querySelector('.c3-hw-low-' + field);
+        if (el) { el.value = data.low[field]; }
+      });
+      if (data.low.objs && data.low.objs.length > 0) {
+        document.querySelectorAll('.c3-hw-low-obj').forEach(function(cb) {
+          if (data.low.objs.indexOf(cb.value) !== -1) cb.checked = true;
+        });
+      }
+    }
+  } catch(e) {}
+}
+
+// Course 3 auto-save
+document.getElementById('course-3').addEventListener('input', function() {
+  clearTimeout(window._perfSv); window._perfSv = setTimeout(saveDataC3, 300);
+});
+document.getElementById('course-3').addEventListener('change', function() {
+  clearTimeout(window._perfSv); window._perfSv = setTimeout(saveDataC3, 300);
+});
+
+/* ============================================================
    Init
    ============================================================ */
 document.addEventListener('DOMContentLoaded', function() {
@@ -1077,6 +1513,8 @@ document.addEventListener('DOMContentLoaded', function() {
   restoreDataC2();
   // If no interview records, add one empty card
   if (!document.querySelector('.interview-card')) addInterview();
+  // Course 3
+  restoreDataC3();
 });
 </script>
 
