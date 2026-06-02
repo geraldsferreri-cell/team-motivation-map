@@ -400,10 +400,17 @@
 
 /* ==================== Course 3: 绩效面谈 ==================== */
 #course-3 { background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 50%, #FFCC80 100%); }
+#course-4 { background: linear-gradient(135deg, #EDE7F6 0%, #D1C4E9 50%, #B39DDB 100%); }
 
 .section-knowledge::before { background: linear-gradient(90deg, #1565C0, #42A5F5); }
 .section-homework-high::before { background: linear-gradient(90deg, #2E7D32, #66BB6A); }
 .section-homework-low::before { background: linear-gradient(90deg, #E65100, #FF9800); }
+
+/* ===== Course 4 section bars ===== */
+.section-core::before { background: linear-gradient(90deg, #1565C0, #42A5F5); }
+.section-five-steps::before { background: linear-gradient(90deg, #F57C00, #FFB300); }
+.section-scenarios::before { background: linear-gradient(90deg, #2E7D32, #66BB6A); }
+.section-c4-homework::before { background: linear-gradient(90deg, #7B1FA2, #AB47BC); }
 
 /* Knowledge cards grid */
 .knowledge-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-bottom: 18px; }
@@ -524,6 +531,9 @@
   .obj-checklist { grid-template-columns: 1fr 1fr; }
   .hw-row { grid-template-columns: 1fr; }
   .hw-row.col3 { grid-template-columns: 1fr; }
+  .c4-steps-grid { grid-template-columns: 1fr; }
+  .c4-scenario-grid { grid-template-columns: 1fr; }
+  .c4-pain-grid { grid-template-columns: 1fr; }
 }
 
 /* ==================== Print ==================== */
@@ -579,6 +589,10 @@
     <a class="nav-item" data-course="3" onclick="showCourse(3)">
       <span class="nav-num">03</span>
       <span class="nav-text">绩效面谈 · 用方法论让沟通有据可依</span>
+    </a>
+    <a class="nav-item" data-course="4" onclick="showCourse(4)">
+      <span class="nav-num">04</span>
+      <span class="nav-text">任务委派与授权 · 把活分明白</span>
     </a>
     <!-- 未来课程：复制上面的 nav-item，改 data-course 和 nav-num 即可 -->
   </div>
@@ -1038,6 +1052,402 @@
 
 </div>
 </div><!-- end course-3 -->
+
+<!-- ==================== 第四期：任务委派与授权 ==================== -->
+<div class="course-page" id="course-4">
+<div class="container">
+
+  <div class="header">
+    <span class="header-badge">第四期 · 管理夜校</span>
+    <h1>📋 任务委派与授权 · 课后作业</h1>
+    <h2>把活分明白 — 黄金五步派活法</h2>
+  </div>
+
+  <!-- Part 1: 核心认知 -->
+  <div class="section section-core">
+    <div class="section-title">
+      <span class="section-num">01</span>
+      任务委派核心认知
+    </div>
+
+    <div class="knowledge-grid col2">
+      <div class="kcard kc-blue">
+        <h4>🔑 什么是有效委派？</h4>
+        <p>委派是将工作职责和<strong>决策权</strong>分配给下级的过程。管理者同步下放：<strong>做事的执行权 + 有限范围内的决策权</strong></p>
+        <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;">
+          <div style="flex:1;min-width:180px;background:#FFF3E0;border-radius:10px;padding:12px;border-left:3px solid #F57C00;">
+            <div style="font-size:13px;font-weight:700;color:#E65100;margin-bottom:4px;">❌ 普通派活</div>
+            <div style="font-size:12px;color:#666;line-height:1.6;">只给工作，不给权限<br>员工只能被动照做<br>没有任何自主决定权<br><strong>只下放「干活的义务」</strong></div>
+          </div>
+          <div style="flex:1;min-width:180px;background:#E8F5E9;border-radius:10px;padding:12px;border-left:3px solid #388E3C;">
+            <div style="font-size:13px;font-weight:700;color:#2E7D32;margin-bottom:4px;">✅ 有效委派（带授权）</div>
+            <div style="font-size:12px;color:#666;line-height:1.6;">告知目标，员工负责落地<br>小问题自己拍板<br>大事/节点汇报<br><strong>下放「义务 + 有限决策权」</strong></div>
+          </div>
+        </div>
+      </div>
+      <div class="kcard kc-red">
+        <h4>⚠️ "分活分不明白"的四大痛点</h4>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;line-height:1.6;">
+            <span style="flex-shrink:0;width:22px;height:22px;border-radius:50%;background:#E53935;color:white;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;">1</span>
+            <span><strong>管理者过劳：</strong>大小事务亲力亲为，天天救火<br><span style="color:#888;">误区：全能思维——"员工不如自己，自己做效率更高"</span></span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;line-height:1.6;">
+            <span style="flex-shrink:0;width:22px;height:22px;border-radius:50%;background:#E53935;color:white;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;">2</span>
+            <span><strong>派活模糊，反复返工：</strong>只讲目标不讲标准<br><span style="color:#888;">误区：认知错位——"我说了这么多，你肯定能明白"</span></span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;line-height:1.6;">
+            <span style="flex-shrink:0;width:22px;height:22px;border-radius:50%;background:#E53935;color:white;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;">3</span>
+            <span><strong>权责不匹配，员工依赖：</strong>只分配工作，不下放权限<br><span style="color:#888;">误区：权限管控过度——害怕员工出错</span></span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;line-height:1.6;">
+            <span style="flex-shrink:0;width:22px;height:22px;border-radius:50%;background:#E53935;color:white;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;">4</span>
+            <span><strong>委派一刀切，人岗不匹配：</strong>简单活复杂化、高难度活随意下放<br><span style="color:#888;">误区：懒于识人——不了解员工能力特长</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 任务分级 -->
+    <div class="criteria-grid" style="margin-top:18px;">
+      <div class="criteria-card cg">
+        <div class="criteria-icon">✅</div>
+        <h4>必须授权</h4>
+        <p style="font-size:12px;opacity:0.9;margin-bottom:6px;">常规琐碎工作</p>
+        <ul>
+          <li>重复性强、流程标准化</li>
+          <li>风险低、出错影响小</li>
+          <li>如：数据统计、报表整理、素材归档、常规排期</li>
+        </ul>
+        <p style="font-size:11.5px;opacity:0.85;margin-top:6px;">💡 解放管理者精力，员工最安全的练兵场</p>
+      </div>
+      <div class="criteria-card cy">
+        <div class="criteria-icon">👍</div>
+        <h4>可以授权</h4>
+        <p style="font-size:12px;opacity:0.9;margin-bottom:6px;">非常规 / 创新类</p>
+        <ul>
+          <li>非标准化、需创新试错</li>
+          <li>风险可控，能助成长</li>
+          <li>如：新账号冷启动、新活动策划、新模式测试</li>
+        </ul>
+        <p style="font-size:11.5px;opacity:0.85;margin-top:6px;">💡 锻炼独立思考能力，助力团队成长</p>
+      </div>
+      <div class="criteria-card cr">
+        <div class="criteria-icon">⚠️</div>
+        <h4>慎之又慎</h4>
+        <p style="font-size:12px;opacity:0.9;margin-bottom:6px;">高风险任务</p>
+        <ul>
+          <li>影响战略、品牌形象</li>
+          <li>涉及核心利益</li>
+          <li>如：战略决策、薪资谈判、危机公关、核心数据披露</li>
+        </ul>
+        <p style="font-size:11.5px;opacity:0.85;margin-top:6px;">💡 管理者必须自己抓，不能直接授权</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Part 2: 黄金五步法 -->
+  <div class="section section-five-steps">
+    <div class="section-title">
+      <span class="section-num">02</span>
+      黄金五步派活法 <span style="font-size:14px;color:#999;font-weight:400;">—— 界定结果的授权沟通</span>
+    </div>
+    <p class="section-desc">核心逻辑：WHY给意义 → WHAT给标准 → HOW给方法 → ACTION给权责 → SUPPORT给底气。杜绝模糊指令，每一步都让员工清楚知道"为什么做、做成什么样、怎么做到、谁负责、有后盾"。</p>
+
+    <div class="c4-steps-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:20px;">
+      <div style="background:white;border-radius:12px;padding:14px 8px;text-align:center;border-top:4px solid #1976D2;">
+        <div style="font-size:22px;font-weight:800;color:#1976D2;">WHY</div>
+        <div style="font-size:13px;font-weight:700;color:#333;margin-top:4px;">说明背景与目的</div>
+        <div style="font-size:11px;color:#999;margin-top:4px;">给意义</div>
+      </div>
+      <div style="background:white;border-radius:12px;padding:14px 8px;text-align:center;border-top:4px solid #F57C00;">
+        <div style="font-size:22px;font-weight:800;color:#F57C00;">WHAT</div>
+        <div style="font-size:13px;font-weight:700;color:#333;margin-top:4px;">提出目标与要求</div>
+        <div style="font-size:11px;color:#999;margin-top:4px;">给标准</div>
+      </div>
+      <div style="background:white;border-radius:12px;padding:14px 8px;text-align:center;border-top:4px solid #388E3C;">
+        <div style="font-size:22px;font-weight:800;color:#388E3C;">HOW</div>
+        <div style="font-size:13px;font-weight:700;color:#333;margin-top:4px;">明确步骤与方法</div>
+        <div style="font-size:11px;color:#999;margin-top:4px;">给方法</div>
+      </div>
+      <div style="background:white;border-radius:12px;padding:14px 8px;text-align:center;border-top:4px solid #7B1FA2;">
+        <div style="font-size:22px;font-weight:800;color:#7B1FA2;">ACTION</div>
+        <div style="font-size:13px;font-weight:700;color:#333;margin-top:4px;">明确行动计划</div>
+        <div style="font-size:11px;color:#999;margin-top:4px;">给权责</div>
+      </div>
+      <div style="background:white;border-radius:12px;padding:14px 8px;text-align:center;border-top:4px solid #E53935;">
+        <div style="font-size:22px;font-weight:800;color:#E53935;">SUPPORT</div>
+        <div style="font-size:13px;font-weight:700;color:#333;margin-top:4px;">表达信任与支持</div>
+        <div style="font-size:11px;color:#999;margin-top:4px;">给底气</div>
+      </div>
+    </div>
+
+    <!-- Step 1: WHY -->
+    <div style="background:white;border-radius:14px;padding:18px 20px;margin-bottom:14px;border-left:4px solid #1976D2;box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+      <h4 style="font-size:15px;color:#1565C0;margin-bottom:10px;">① WHY — 说明背景与目的</h4>
+      <p style="font-size:12.5px;color:#888;margin-bottom:10px;">核心：让员工明白<strong>"为什么要做"</strong>——绑定业务背景、执行目的、战略价值</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div style="background:#FFF3E0;border-radius:10px;padding:12px;font-size:12.5px;line-height:1.7;">
+          <div style="font-weight:700;color:#E65100;margin-bottom:4px;">❌ 反面话术</div>
+          <span style="color:#666;">"今晚加班赶一条短视频，别问为什么，直接做就行。公司安排，照做就完事。"</span>
+          <div style="margin-top:6px;font-size:11.5px;color:#E65100;">→ 员工只把任务当机械劳动，容易敷衍抵触</div>
+        </div>
+        <div style="background:#E8F5E9;border-radius:10px;padding:12px;font-size:12.5px;line-height:1.7;">
+          <div style="font-weight:700;color:#2E7D32;margin-bottom:4px;">✅ 正面话术</div>
+          <span style="color:#666;">"目前咱们账号新品种草类视频数据持续下滑，平台近期流量扶持新品赛道。这次让你制作这条短视频，核心目的是抢占本周流量窗口期，拉动新品曝光与转化，直接关系咱们部门本月业绩达标率。"</span>
+          <div style="margin-top:6px;font-size:11.5px;color:#2E7D32;">→ 绑定业务背景，赋予工作意义，从根源减少抵触</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: WHAT -->
+    <div style="background:white;border-radius:14px;padding:18px 20px;margin-bottom:14px;border-left:4px solid #F57C00;box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+      <h4 style="font-size:15px;color:#E65100;margin-bottom:10px;">② WHAT — 提出目标与要求</h4>
+      <p style="font-size:12.5px;color:#888;margin-bottom:10px;">核心：清晰界定<strong>"要做成什么样"</strong>——交付成果、验收标准、评判维度全部量化</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div style="background:#FFF3E0;border-radius:10px;padding:12px;font-size:12.5px;line-height:1.7;">
+          <div style="font-weight:700;color:#E65100;margin-bottom:4px;">❌ 反面话术</div>
+          <span style="color:#666;">"你帮我写一份下周的策划案，做的完善一点、质量高一些，尽量贴合用户喜好。"</span>
+          <div style="margin-top:6px;font-size:11.5px;color:#E65100;">→ "完善、高质量"属于主观词汇，大概率多次返工</div>
+        </div>
+        <div style="background:#E8F5E9;border-radius:10px;padding:12px;font-size:12.5px;line-height:1.7;">
+          <div style="font-weight:700;color:#2E7D32;margin-bottom:4px;">✅ 正面话术</div>
+          <span style="color:#666;">"你负责输出下周美妆专场直播策划案。要求包含直播流程、选品清单、福利玩法、投放预算四大板块；主打下沉市场年轻女性受众；晚上20点直播，整场时长2小时，策划案需要具备可直接落地执行的条件。"</span>
+          <div style="margin-top:6px;font-size:11.5px;color:#2E7D32;">→ 交付内容、受众、风格、时间全部量化，杜绝无效返工</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3: HOW -->
+    <div style="background:white;border-radius:14px;padding:18px 20px;margin-bottom:14px;border-left:4px solid #388E3C;box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+      <h4 style="font-size:15px;color:#2E7D32;margin-bottom:10px;">③ HOW — 明确步骤与方法</h4>
+      <p style="font-size:12.5px;color:#888;margin-bottom:10px;">核心：告知<strong>"该怎么干"</strong>——根据员工能力层级提供适配指导：新人给细则，老员工给方向</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div style="background:#FFF3E0;border-radius:10px;padding:12px;font-size:12.5px;line-height:1.7;">
+          <div style="font-weight:700;color:#E65100;margin-bottom:4px;">❌ 反面话术</div>
+          <span style="color:#666;">"这个热点推文交给你了，你是老员工，怎么做不用我教你，自己看着办。"</span>
+          <div style="margin-top:6px;font-size:11.5px;color:#E65100;">→ 典型甩手式授权，员工容易无从下手，偏离定位</div>
+        </div>
+        <div style="background:#E8F5E9;border-radius:10px;padding:12px;font-size:12.5px;line-height:1.7;">
+          <div style="font-weight:700;color:#2E7D32;margin-bottom:4px;">✅ 正面话术</div>
+          <span style="color:#666;">"本次热点推文我给你两个执行思路：第一种结合用户痛点做科普向推文，第二种结合产品做种草向推文；我发你3篇往期同类型爆款参考稿，你优先参考第二种风格；如果选题、文案拿捏不准，可以随时和我沟通。"</span>
+          <div style="margin-top:6px;font-size:11.5px;color:#2E7D32;">→ 划定执行范围、提供参考资源，给予创作空间同时规避方向性错误</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4: ACTION -->
+    <div style="background:white;border-radius:14px;padding:18px 20px;margin-bottom:14px;border-left:4px solid #7B1FA2;box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+      <h4 style="font-size:15px;color:#7B1FA2;margin-bottom:10px;">④ ACTION — 明确行动计划</h4>
+      <p style="font-size:12.5px;color:#888;margin-bottom:10px;">核心：敲定<strong>"完整执行方案"</strong>——唯一负责人 + 权责权限 + 分级截止时间 + 考核规则，双向确认理解度</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div style="background:#FFF3E0;border-radius:10px;padding:12px;font-size:12.5px;line-height:1.7;">
+          <div style="font-weight:700;color:#E65100;margin-bottom:4px;">❌ 反面话术</div>
+          <span style="color:#666;">"这个账号数据复盘报表你负责一下，尽快交给我。过程自己把控，有问题自己解决。"</span>
+          <div style="margin-top:6px;font-size:11.5px;color:#E65100;">→ 无明确DDL、无权限说明，极易出现任务延期</div>
+        </div>
+        <div style="background:#E8F5E9;border-radius:10px;padding:12px;font-size:12.5px;line-height:1.7;">
+          <div style="font-weight:700;color:#2E7D32;margin-bottom:4px;">✅ 正面话术</div>
+          <span style="color:#666;">"本次账号月度数据复盘，由你全权负责，为唯一负责人。你有权调取运营、短视频两组基础数据；今日18点前提交初稿，明日中午12点提交定稿。现在你简单复述一遍任务，你确认是否理解？"</span>
+          <div style="margin-top:6px;font-size:11.5px;color:#2E7D32;">→ 权责、节点、权限全部落地，双向确认理解度</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 5: SUPPORT -->
+    <div style="background:white;border-radius:14px;padding:18px 20px;margin-bottom:14px;border-left:4px solid #E53935;box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+      <h4 style="font-size:15px;color:#C62828;margin-bottom:10px;">⑤ SUPPORT — 表达信任与支持</h4>
+      <p style="font-size:12.5px;color:#888;margin-bottom:10px;">核心：给予<strong>"底气和后盾"</strong>——精神鼓励 + 资源兜底，点明重难点、容错底线，让员工知道"部门和我是你的后盾"</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div style="background:#FFF3E0;border-radius:10px;padding:12px;font-size:12.5px;line-height:1.7;">
+          <div style="font-weight:700;color:#E65100;margin-bottom:4px;">❌ 反面话术</div>
+          <span style="color:#666;">"这个项目交给你了，只能做好不能做错，出了所有问题全部由你自己承担。"</span>
+          <div style="margin-top:6px;font-size:11.5px;color:#E65100;">→ 施压式沟通，员工惧怕犯错，授权形同虚设</div>
+        </div>
+        <div style="background:#E8F5E9;border-radius:10px;padding:12px;font-size:12.5px;line-height:1.7;">
+          <div style="font-weight:700;color:#2E7D32;margin-bottom:4px;">✅ 正面话术</div>
+          <span style="color:#666;">"这个项目难度我很清楚，难点主要在于投放预算把控和舆情风险管控。我之所以交给你，是认可你的策划能力。常规创作、小额预算你可以自主决策；遇到重大问题，我们一起商量解决。大胆去做，部门和我是你的后盾。"</span>
+          <div style="margin-top:6px;font-size:11.5px;color:#2E7D32;">→ 点明重难点、划定容错红线、给予信任兜底</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 五步法小结 -->
+    <div style="background:linear-gradient(135deg,#1565C0,#1976D2);border-radius:14px;padding:18px 20px;color:white;">
+      <h4 style="font-size:14px;font-weight:700;margin-bottom:8px;">💡 黄金五步法核心原则</h4>
+      <div style="font-size:12.5px;line-height:1.8;opacity:0.95;">
+        授权不是撒手不管，也不是全程紧盯。<strong>常规事项充分放权、高危事项收紧权限、特殊场景动态微调。</strong><br>
+        把控原则：<strong>对长处充分信任，对短板主动设防。</strong>因人授权、因事管控。
+      </div>
+    </div>
+  </div>
+
+  <!-- Part 3: 实战演练 -->
+  <div class="section section-scenarios">
+    <div class="section-title">
+      <span class="section-num">03</span>
+      实战演练 — 两个经典场景
+    </div>
+    <p class="section-desc">以下两个授权场景，运用黄金五步法（WHY→WHAT→HOW→ACTION→SUPPORT）完成完整的授权沟通。参考要点已给出，可在此基础上优化。</p>
+
+    <div class="c4-scenario-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <!-- Scenario 1 -->
+      <div style="background:white;border-radius:16px;padding:0;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.06);border-top:4px solid #1976D2;">
+        <div style="background:linear-gradient(135deg,#1565C0,#1976D2);color:white;padding:14px 18px;">
+          <h4 style="font-size:15px;font-weight:700;">📋 场景一：达人签约授权</h4>
+          <p style="font-size:11.5px;opacity:0.88;margin-top:3px;">业务背景：母婴、家居赛道内卷严重，商单利润微薄，计划进军汽车垂类</p>
+        </div>
+        <div style="padding:16px;">
+          <table style="width:100%;border-collapse:collapse;font-size:12.5px;">
+            <tr style="border-bottom:1px solid #EEE;">
+              <td style="padding:8px 10px;font-weight:700;color:#1976D2;white-space:nowrap;vertical-align:top;">WHY</td>
+              <td style="padding:8px 10px;color:#555;line-height:1.6;">汽车赛道是突破业绩瓶颈的关键风口，签下标杆达人决定能否快速切入汽车赛道</td>
+            </tr>
+            <tr style="border-bottom:1px solid #EEE;">
+              <td style="padding:8px 10px;font-weight:700;color:#F57C00;white-space:nowrap;vertical-align:top;">WHAT</td>
+              <td style="padding:8px 10px;color:#555;line-height:1.6;">本月内完成签约，可预先打款但只能保单1个月，达人分成比例不能超出公司预设红线</td>
+            </tr>
+            <tr style="border-bottom:1px solid #EEE;">
+              <td style="padding:8px 10px;font-weight:700;color:#388E3C;white-space:nowrap;vertical-align:top;">HOW</td>
+              <td style="padding:8px 10px;color:#555;line-height:1.6;">建联→方案→谈判；涉及调整签约年限/突破分成预算等重大决策先出具方案内部商议</td>
+            </tr>
+            <tr style="border-bottom:1px solid #EEE;">
+              <td style="padding:8px 10px;font-weight:700;color:#7B1FA2;white-space:nowrap;vertical-align:top;">ACTION</td>
+              <td style="padding:8px 10px;color:#555;line-height:1.6;">唯一第一负责人；基础福利/小额礼金/档期微调可自主决策；3天建联/一周方案/月底签约</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 10px;font-weight:700;color:#C62828;white-space:nowrap;vertical-align:top;">SUPPORT</td>
+              <td style="padding:8px 10px;color:#555;line-height:1.6;">认可商务谈判能力；常规问题自主决策；棘手问题随时找我，甚至亲自陪你参与谈判</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Scenario 2 -->
+      <div style="background:white;border-radius:16px;padding:0;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.06);border-top:4px solid #388E3C;">
+        <div style="background:linear-gradient(135deg,#2E7D32,#388E3C);color:white;padding:14px 18px;">
+          <h4 style="font-size:15px;font-weight:700;">🌱 场景二：公益账号冷启动授权</h4>
+          <p style="font-size:11.5px;opacity:0.88;margin-top:3px;">业务背景：平台算法利好正能量/公益内容，流量扶持大、公信力强</p>
+        </div>
+        <div style="padding:16px;">
+          <table style="width:100%;border-collapse:collapse;font-size:12.5px;">
+            <tr style="border-bottom:1px solid #EEE;">
+              <td style="padding:8px 10px;font-weight:700;color:#1976D2;white-space:nowrap;vertical-align:top;">WHY</td>
+              <td style="padding:8px 10px;color:#555;line-height:1.6;">常规娱乐/种草类账号内卷严重，流量成本高。平台倾斜流量扶持公益/正能量内容，还能提升公司品牌形象、对接政企合作</td>
+            </tr>
+            <tr style="border-bottom:1px solid #EEE;">
+              <td style="padding:8px 10px;font-weight:700;color:#F57C00;white-space:nowrap;vertical-align:top;">WHAT</td>
+              <td style="padding:8px 10px;color:#555;line-height:1.6;">本月完成冷启动：发布15条原创内容，粉丝破5000，内容平均播放量达标平台同赛道均值；严禁博眼球/虚假公益/擦边负能量内容</td>
+            </tr>
+            <tr style="border-bottom:1px solid #EEE;">
+              <td style="padding:8px 10px;font-weight:700;color:#388E3C;white-space:nowrap;vertical-align:top;">HOW</td>
+              <td style="padding:8px 10px;color:#555;line-height:1.6;">账号定位三大板块（城市暖心公益/弱势群体帮扶/正向社会日常）+ 内容排期 + 发布节奏</td>
+            </tr>
+            <tr style="border-bottom:1px solid #EEE;">
+              <td style="padding:8px 10px;font-weight:700;color:#7B1FA2;white-space:nowrap;vertical-align:top;">ACTION</td>
+              <td style="padding:8px 10px;color:#555;line-height:1.6;">全权担任公益新账号负责人；第一周注册定位/第二周内容策划拍摄/第三四周持续发布；每周五提交数据周报</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 10px;font-weight:700;color:#C62828;white-space:nowrap;vertical-align:top;">SUPPORT</td>
+              <td style="padding:8px 10px;color:#555;line-height:1.6;">鼓励试错，部门和我是后盾；起号成功后可申请专项激励，快速积累公益赛道运营经验</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 授权踩坑提示 -->
+    <div style="margin-top:18px;background:#FFF8E1;border-radius:14px;padding:16px 20px;border-left:4px solid #FFA000;">
+      <h4 style="font-size:14px;font-weight:700;color:#E65100;margin-bottom:8px;">⚠️ 授权常见踩坑点</h4>
+      <div style="font-size:12.5px;color:#666;line-height:1.8;">
+        1. 告诉员工该做什么、如何做（像S1指令式）<br>
+        2. 然后放手让他们去做（以为是S4授权式）<br>
+        3. 其实不过是自欺欺人——除非员工已成熟到D4状态<br>
+        4. 员工绩效不如预期，我们仍像S1苛责员工<br>
+        5. 结果：自己的挫败感 + 员工的困扰和愤怒<br>
+        <strong style="color:#E65100;">→ 授权不是一步到位的，需要根据员工发展阶段逐步过渡：S1→S2→S3→S4，循序渐进。</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- Part 4: 课后作业 -->
+  <div class="section section-c4-homework">
+    <div class="section-title">
+      <span class="section-num" style="background:#7B1FA2">04</span>
+      课后作业 — 动手练一练
+    </div>
+    <p class="section-desc">运用「黄金五步派活法」，基于某一份重点工作，输出完整的任务下发话术。下节课分享交流！</p>
+
+    <div class="hw-form" id="c4HomeworkForm">
+      <div class="hw-row">
+        <div class="hw-group"><label>你的姓名 / 部门</label><input type="text" class="c4-hw-name" placeholder="填写你的姓名和部门"></div>
+        <div class="hw-group"><label>选定的重点工作任务</label><input type="text" class="c4-hw-task" placeholder="简要描述你要委派的具体工作任务"></div>
+      </div>
+
+      <div class="hw-subtitle" style="border-left-color:#1976D2;">① WHY — 说明背景与目的</div>
+      <div class="hw-group">
+        <label>写下你向员工说明"为什么要做"的话术（绑定业务背景、执行目的、战略价值）</label>
+        <textarea class="c4-hw-why" placeholder="参考模板：目前咱们___，现阶段公司明确要___。这次让你___，核心目的是___，直接关系___。"></textarea>
+      </div>
+
+      <div class="hw-subtitle" style="border-left-color:#F57C00;">② WHAT — 提出目标与要求</div>
+      <div class="hw-group">
+        <label>写下你清晰界定交付成果的话术（量化验收标准、评判维度）</label>
+        <textarea class="c4-hw-what" placeholder="参考模板：你的核心任务：___。要求包含___；主打___；___前完成，需要具备___。"></textarea>
+      </div>
+
+      <div class="hw-subtitle" style="border-left-color:#388E3C;">③ HOW — 明确步骤与方法</div>
+      <div class="hw-group">
+        <label>写下你提供执行思路和参考资源的话术（新人给细则，老员工给方向）</label>
+        <textarea class="c4-hw-how" placeholder="参考模板：本次___我给你两个执行思路：第一种___，第二种___；我发你___参考；如果___拿捏不准，可以随时和我沟通。"></textarea>
+      </div>
+
+      <div class="hw-subtitle" style="border-left-color:#7B1FA2;">④ ACTION — 明确行动计划</div>
+      <div class="hw-row">
+        <div class="hw-group"><label>唯一负责人</label><input type="text" class="c4-hw-action-owner" placeholder="明确指定唯一负责人"></div>
+        <div class="hw-group"><label>权责权限（哪些可以自主决策）</label><input type="text" class="c4-hw-action-auth" placeholder="列出员工可以自主决策的事项范围"></div>
+      </div>
+      <div class="hw-row" style="margin-top:10px;">
+        <div class="hw-group"><label>分级截止时间（DDL）</label><input type="text" class="c4-hw-action-ddl" placeholder="如：今天18点前初稿，明天12点定稿"></div>
+        <div class="hw-group"><label>考核规则 / 验收标准</label><input type="text" class="c4-hw-action-kpi" placeholder="如何评判任务完成质量？"></div>
+      </div>
+      <div class="hw-group" style="margin-top:10px;">
+        <label>双向确认（你如何确认员工理解了？）</label>
+        <textarea class="c4-hw-action-confirm" placeholder="参考模板：现在你简单复述一遍任务，你确认是否理解？" style="min-height:50px;"></textarea>
+      </div>
+
+      <div class="hw-subtitle" style="border-left-color:#E53935;">⑤ SUPPORT — 表达信任与支持</div>
+      <div class="hw-group">
+        <label>写下你表达信任和给予支持的话术（精神鼓励 + 资源兜底 + 容错底线）</label>
+        <textarea class="c4-hw-support" placeholder="参考模板：这个项目难度我很清楚，难点主要在于___。我之所以交给你，是认可你的___能力。___你可以自主决策；遇到重大问题，我们一起商量解决。大胆去做，部门和我是你的后盾。"></textarea>
+      </div>
+    </div>
+
+    <!-- 授权方式速查 -->
+    <div style="margin-top:20px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;">
+      <div style="background:linear-gradient(135deg,#E3F2FD,#BBDEFB);border-radius:12px;padding:14px;text-align:center;">
+        <div style="font-size:13px;font-weight:800;color:#1565C0;">S1 指令式</div>
+        <div style="font-size:11px;color:#666;margin-top:4px;">高指令·低授权·强监督<br>适用于 D1 学习者</div>
+      </div>
+      <div style="background:linear-gradient(135deg,#E8F5E9,#C8E6C9);border-radius:12px;padding:14px;text-align:center;">
+        <div style="font-size:13px;font-weight:800;color:#2E7D32;">S2 教练式</div>
+        <div style="font-size:11px;color:#666;margin-top:4px;">半指令·半授权·多辅导<br>适用于 D2 初做者</div>
+      </div>
+      <div style="background:linear-gradient(135deg,#FFF3E0,#FFE0B2);border-radius:12px;padding:14px;text-align:center;">
+        <div style="font-size:13px;font-weight:800;color:#E65100;">S3 支持式</div>
+        <div style="font-size:11px;color:#666;margin-top:4px;">低指令·高授权·多支持<br>适用于 D3 有经验者</div>
+      </div>
+      <div style="background:linear-gradient(135deg,#F3E5F5,#E1BEE7);border-radius:12px;padding:14px;text-align:center;">
+        <div style="font-size:13px;font-weight:800;color:#7B1FA2;">S4 授权式</div>
+        <div style="font-size:11px;color:#666;margin-top:4px;">零指令·完全授权·共担责任<br>适用于 D4 熟手</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">授权不是撒手不管，也不是全程紧盯——对长处充分信任，对短板主动设防。 | 方片新媒体管理夜校课后作业</div>
+
+</div>
+</div><!-- end course-4 -->
 
 
 </div><!-- end main-content -->
@@ -1502,6 +1912,45 @@ document.getElementById('course-3').addEventListener('change', function() {
 });
 
 /* ============================================================
+   Course 4: 任务委派与授权
+   ============================================================ */
+var STORAGE_KEY_C4 = 'delegation_course_v1';
+
+function saveDataC4() {
+  var data = {};
+  [
+    'name','task',
+    'why','what','how',
+    'action-owner','action-auth','action-ddl','action-kpi','action-confirm',
+    'support'
+  ].forEach(function(field) {
+    var el = document.querySelector('.c4-hw-' + field);
+    if (el) { data[field] = (el.type === 'select-one') ? (el.selectedIndex >= 0 ? el.options[el.selectedIndex].value : '') : el.value; }
+  });
+  try { localStorage.setItem(STORAGE_KEY_C4, JSON.stringify(data)); } catch(e) {}
+}
+
+function restoreDataC4() {
+  try {
+    var raw = localStorage.getItem(STORAGE_KEY_C4);
+    if (!raw) return;
+    var data = JSON.parse(raw);
+    Object.keys(data).forEach(function(field) {
+      var el = document.querySelector('.c4-hw-' + field);
+      if (el) { el.value = data[field]; }
+    });
+  } catch(e) {}
+}
+
+// Course 4 auto-save
+document.getElementById('course-4').addEventListener('input', function() {
+  clearTimeout(window._delSv); window._delSv = setTimeout(saveDataC4, 300);
+});
+document.getElementById('course-4').addEventListener('change', function() {
+  clearTimeout(window._delSv); window._delSv = setTimeout(saveDataC4, 300);
+});
+
+/* ============================================================
    Init
    ============================================================ */
 document.addEventListener('DOMContentLoaded', function() {
@@ -1515,6 +1964,8 @@ document.addEventListener('DOMContentLoaded', function() {
   if (!document.querySelector('.interview-card')) addInterview();
   // Course 3
   restoreDataC3();
+  // Course 4
+  restoreDataC4();
 });
 </script>
 
