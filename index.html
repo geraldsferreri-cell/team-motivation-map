@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>管理夜校 · 课后作业平台</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<script>if(typeof echarts==='undefined'){document.write('<script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.5.0/echarts.min.js"><\/script>');}</script>
 <style>
 /* ==================== Reset ==================== */
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -401,6 +403,7 @@
 /* ==================== Course 3: 绩效面谈 ==================== */
 #course-3 { background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 50%, #FFCC80 100%); }
 #course-4 { background: linear-gradient(135deg, #EDE7F6 0%, #D1C4E9 50%, #B39DDB 100%); }
+#course-5 { background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 50%, #90CAF9 100%); }
 
 .section-knowledge::before { background: linear-gradient(90deg, #1565C0, #42A5F5); }
 .section-homework-high::before { background: linear-gradient(90deg, #2E7D32, #66BB6A); }
@@ -593,6 +596,10 @@
     <a class="nav-item" data-course="4" onclick="showCourse(4)">
       <span class="nav-num">04</span>
       <span class="nav-text">任务委派与授权 · 把活分明白</span>
+    </a>
+    <a class="nav-item" data-course="5" onclick="showCourse(5)">
+      <span class="nav-num">05</span>
+      <span class="nav-text">MCN自孵化 · 5月经营数据归因分析</span>
     </a>
     <!-- 未来课程：复制上面的 nav-item，改 data-course 和 nav-num 即可 -->
   </div>
@@ -1449,6 +1456,238 @@
 </div>
 </div><!-- end course-4 -->
 
+<!-- ==================== 第五期：MCN自孵化经营数据分析 ==================== -->
+<div class="course-page" id="course-5">
+<div class="container">
+
+  <div class="header">
+    <span class="header-badge" style="background:#1565C0">第五期 · 2026.06.04</span>
+    <h1>📊 MCN自孵化业务 · 5月经营数据归因分析</h1>
+    <h2>数据来源：千瓜14赛道 + 自孵订单(198单) + 五月星河竞对(100条笔记)</h2>
+  </div>
+
+  <!-- Part 1: KPI概览 -->
+  <div class="section section-core">
+    <div class="section-title"><span class="section-num">01</span>5月核心经营指标</div>
+    <div class="knowledge-grid col3">
+      <div class="kcard kc-blue"><h4>📊 5月发布金额</h4>
+        <div style="font-size:32px;font-weight:800;color:#1565C0;margin:8px 0;">159.0万</div>
+        <div style="font-size:12px;color:#666;">168单 · 87品牌 · 5月实际发布</div>
+      </div>
+      <div class="kcard kc-orange"><h4>📝 5月成单金额</h4>
+        <div style="font-size:32px;font-weight:800;color:#E65100;margin:8px 0;">56.2万</div>
+        <div style="font-size:12px;color:#666;">64单 · 环比4月-41% · 1-5月第二高</div>
+      </div>
+      <div class="kcard kc-green"><h4>📈 1-5月增长</h4>
+        <div style="font-size:32px;font-weight:800;color:#2E7D32;margin:8px 0;">20x</div>
+        <div style="font-size:12px;color:#666;">1月2.8万 → 5月56.2万 · 4月峰值95.2万</div>
+      </div>
+      <div class="kcard kc-red"><h4>🏢 媒介依赖度</h4>
+        <div style="font-size:32px;font-weight:800;color:#C62828;margin:8px 0;">91.7%</div>
+        <div style="font-size:12px;color:#666;">154单媒介 · 14单直签 · 直签均单1.79万</div>
+      </div>
+      <div class="kcard kc-purple"><h4>👤 关键人集中度</h4>
+        <div style="font-size:32px;font-weight:800;color:#7B1FA2;margin:8px 0;">43.7%</div>
+        <div style="font-size:12px;color:#666;">Top3开发人贡献43.7% · 23人团队15人<4%</div>
+      </div>
+      <div class="kcard kc-blue"><h4>🔁 品牌复购</h4>
+        <div style="font-size:32px;font-weight:800;color:#1565C0;margin:8px 0;">59%</div>
+        <div style="font-size:12px;color:#666;">pre-May老品牌留存率 · 5月新品牌85%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Part 2: 月度趋势 -->
+  <div class="section section-knowledge">
+    <div class="section-title"><span class="section-num">02</span>月度趋势：不是"暴跌"，是"冲量后回归"</div>
+
+    <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px;">
+      <div style="flex:2;min-width:400px;background:white;border-radius:12px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+        <div id="c5-chart-trend" style="width:100%;height:360px;"></div>
+      </div>
+      <div style="flex:1;min-width:280px;background:white;border-radius:12px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+        <h4 style="font-size:14px;color:#333;margin-bottom:12px;">📌 关键判断</h4>
+        <table style="width:100%;font-size:12px;border-collapse:collapse;">
+          <tr><td style="padding:6px 8px;border-bottom:1px solid #eee;color:#888;">1月</td><td style="padding:6px 8px;border-bottom:1px solid #eee;"><strong>2.8万</strong> / 4单</td></tr>
+          <tr><td style="padding:6px 8px;border-bottom:1px solid #eee;color:#888;">2月</td><td style="padding:6px 8px;border-bottom:1px solid #eee;"><strong>3.9万</strong> / 1单</td></tr>
+          <tr><td style="padding:6px 8px;border-bottom:1px solid #eee;color:#888;">3月</td><td style="padding:6px 8px;border-bottom:1px solid #eee;"><strong>27.7万</strong> / 13单</td></tr>
+          <tr style="background:#FFF3E0;"><td style="padding:6px 8px;border-bottom:1px solid #eee;color:#E65100;font-weight:700;">4月</td><td style="padding:6px 8px;border-bottom:1px solid #eee;color:#E65100;font-weight:700;">95.2万 / 116单 ⚠️异常冲量</td></tr>
+          <tr><td style="padding:6px 8px;color:#1565C0;font-weight:700;">5月</td><td style="padding:6px 8px;color:#1565C0;font-weight:700;">56.2万 / 64单</td></tr>
+        </table>
+        <div style="margin-top:14px;padding:12px;background:#E3F2FD;border-radius:8px;font-size:12px;color:#333;line-height:1.7;">
+          <strong>💡 正确叙事：</strong>4月成单量是3月的9倍，极可能是季度末冲量。5月回到正常水位但仍是<strong>1-5月第二高月</strong>。核心问题不是"5月为什么跌了"，而是<strong>"4月为什么那么高"</strong>——两种完全不同的管理行动方向。
+        </div>
+      </div>
+    </div>
+
+    <div style="background:white;border-radius:12px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+      <h4 style="font-size:14px;color:#333;margin-bottom:12px;">⚠️ 两个"5月金额"——不能混用</h4>
+      <table style="width:100%;font-size:12px;border-collapse:collapse;">
+        <tr style="background:#f5f5f5;"><th style="padding:10px;text-align:left;">口径</th><th style="padding:10px;text-align:left;">金额</th><th style="padding:10px;text-align:left;">含义</th><th style="padding:10px;text-align:left;">用途</th></tr>
+        <tr><td style="padding:10px;border-bottom:1px solid #eee;font-weight:700;color:#1565C0;">成单金额</td><td style="padding:10px;border-bottom:1px solid #eee;">56.2万 / 64单</td><td style="padding:10px;border-bottom:1px solid #eee;">5月新签合同的订单金额</td><td style="padding:10px;border-bottom:1px solid #eee;">衡量BD当月业绩</td></tr>
+        <tr><td style="padding:10px;font-weight:700;color:#2E7D32;">发布金额</td><td style="padding:10px;">159.0万 / 168单</td><td style="padding:10px;">5月实际发布内容的订单金额</td><td style="padding:10px;">衡量交付产出</td></tr>
+      </table>
+      <div style="margin-top:10px;font-size:12px;color:#888;">差距103万说明：4月大量签约订单在5月才完成发布。4月成单116单但发布仅30单——<strong>BD签约速度远快于内容生产速度。</strong></div>
+    </div>
+  </div>
+
+  <!-- Part 3: 品牌健康度 -->
+  <div class="section section-knowledge">
+    <div class="section-title"><span class="section-num">03</span>品牌健康度：新客涌入 · 老客留存59%</div>
+
+    <div style="display:flex;gap:16px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:300px;background:white;border-radius:12px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+        <div id="c5-chart-brand-structure" style="width:100%;height:300px;"></div>
+        <div style="text-align:center;font-size:12px;color:#666;">5月87个品牌：74新(85%) + 13老(15%)</div>
+      </div>
+      <div style="flex:1;min-width:300px;background:white;border-radius:12px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+        <div id="c5-chart-retention" style="width:100%;height:300px;"></div>
+        <div style="text-align:center;font-size:12px;color:#666;">pre-May 22个品牌：13个5月回归 · 9个未回归</div>
+      </div>
+    </div>
+
+    <div style="background:white;border-radius:12px;padding:20px;margin-top:16px;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+      <h4 style="font-size:14px;color:#333;margin-bottom:12px;">💡 重新定义"品牌流失"</h4>
+      <div style="font-size:12px;color:#333;line-height:1.8;">
+        5月87个发布品牌中，<strong style="color:#2E7D32;">74个是全新品牌</strong>（此前从未合作过）。它们不是"流失"——只是刚来，尚未进入复购窗口。<br><br>
+        真正应关注的：pre-May的22个老品牌中，5月回来的<strong style="color:#2E7D32;">13个（59%）</strong>，9个未回来（41%）。这才是<strong style="color:#C62828;">有意义的留存指标</strong>。<br><br>
+        建议开发人逐一联系9个未回归品牌（如淘宝、中国黄金等），了解未复购原因。
+      </div>
+    </div>
+  </div>
+
+  <!-- Part 4: 赛道与大盘 -->
+  <div class="section section-knowledge">
+    <div class="section-title"><span class="section-num">04</span>赛道对标：每个赛道自孵占比<0.3%——天花板极远</div>
+
+    <div style="display:flex;gap:16px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:450px;background:white;border-radius:12px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+        <div id="c5-chart-market" style="width:100%;height:380px;"></div>
+      </div>
+      <div style="flex:1;min-width:300px;background:white;border-radius:12px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+        <h4 style="font-size:14px;color:#333;margin-bottom:12px;">自孵营收赛道分布</h4>
+        <div id="c5-chart-self-pie" style="width:100%;height:340px;"></div>
+        <div style="font-size:11px;color:#888;text-align:center;margin-top:4px;">⚠️ "未分类"占19.5%营收——24个品牌待归类</div>
+      </div>
+    </div>
+
+    <div style="background:white;border-radius:12px;padding:20px;margin-top:16px;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+      <h4 style="font-size:14px;color:#333;margin-bottom:12px;">🔑 核心洞察：互联网品牌≠无大盘对标</h4>
+      <div style="font-size:12px;color:#333;line-height:1.8;">
+        以<strong>京东商城</strong>为例：在千瓜<strong>14个赛道全部进入TOP200</strong>（科技数码#1、家居家装#2）。问题不是"赛道无对标"，而是自孵的品牌分类体系与千瓜未对齐。<br><br>
+        <strong>每个赛道自孵占比都不到0.3%</strong>——增长空间巨大。当前策略：将互联网品牌的内容分发到护肤/美食/科技等有明确大盘的赛道，而非从零开拓新赛道。
+      </div>
+    </div>
+  </div>
+
+  <!-- Part 5: 竞对对比 -->
+  <div class="section section-knowledge">
+    <div class="section-title"><span class="section-num">05</span>竞对对比：五月星河 · 仅用可验证数据</div>
+
+    <div style="display:flex;gap:16px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:300px;background:white;border-radius:12px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+        <h4 style="font-size:14px;color:#333;margin-bottom:12px;">📊 可验证对比维度</h4>
+        <table style="width:100%;font-size:12px;border-collapse:collapse;">
+          <tr style="background:#f5f5f5;"><th style="padding:8px;text-align:left;">维度</th><th style="padding:8px;text-align:left;">五月星河</th><th style="padding:8px;text-align:left;">自孵化</th></tr>
+          <tr><td style="padding:8px;border-bottom:1px solid #eee;">数据时间</td><td style="padding:8px;border-bottom:1px solid #eee;">4/26-5/23(28天)</td><td style="padding:8px;border-bottom:1px solid #eee;">5月全月</td></tr>
+          <tr><td style="padding:8px;border-bottom:1px solid #eee;">笔记/订单数</td><td style="padding:8px;border-bottom:1px solid #eee;">100条</td><td style="padding:8px;border-bottom:1px solid #eee;">168单</td></tr>
+          <tr><td style="padding:8px;border-bottom:1px solid #eee;">合作品牌数</td><td style="padding:8px;border-bottom:1px solid #eee;">70个</td><td style="padding:8px;border-bottom:1px solid #eee;">87个</td></tr>
+          <tr><td style="padding:8px;border-bottom:1px solid #eee;">报价/成交均值</td><td style="padding:8px;border-bottom:1px solid #eee;color:#2E7D32;"><strong>2.59万(报价)</strong></td><td style="padding:8px;border-bottom:1px solid #eee;">0.95万(成交)</td></tr>
+          <tr><td style="padding:8px;border-bottom:1px solid #eee;">品牌重叠</td><td style="padding:8px;border-bottom:1px solid #eee;" colspan="2">仅9个重叠（美团闪购/别克/麦当劳/多芬/腾讯元宝等）</td></tr>
+        </table>
+        <div style="margin-top:12px;padding:10px;background:#FFF3E0;border-radius:8px;font-size:11px;color:#E65100;">
+          ⚠️ 数据局限：星河2.59万是达人报价（含平台抽成），自孵0.95万是实际结算价——口径不同，不可直接对比。星河原始数据无达人层级字段。
+        </div>
+      </div>
+      <div style="flex:1;min-width:300px;background:white;border-radius:12px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+        <h4 style="font-size:14px;color:#333;margin-bottom:12px;">📋 客户与渠道效率</h4>
+        <table style="width:100%;font-size:12px;border-collapse:collapse;">
+          <tr style="background:#f5f5f5;"><th style="padding:8px;text-align:left;">渠道</th><th style="padding:8px;text-align:left;">订单</th><th style="padding:8px;text-align:left;">金额</th><th style="padding:8px;text-align:left;">均单</th></tr>
+          <tr><td style="padding:8px;border-bottom:1px solid #eee;">提报</td><td style="padding:8px;border-bottom:1px solid #eee;">114单</td><td style="padding:8px;border-bottom:1px solid #eee;">88.0万</td><td style="padding:8px;border-bottom:1px solid #eee;">0.77万</td></tr>
+          <tr><td style="padding:8px;border-bottom:1px solid #eee;color:#2E7D32;font-weight:700;">定询</td><td style="padding:8px;border-bottom:1px solid #eee;color:#2E7D32;">67单</td><td style="padding:8px;border-bottom:1px solid #eee;color:#2E7D32;">82.7万</td><td style="padding:8px;border-bottom:1px solid #eee;color:#2E7D32;"><strong>1.23万</strong></td></tr>
+          <tr><td style="padding:8px;border-bottom:1px solid #eee;">线索</td><td style="padding:8px;border-bottom:1px solid #eee;">17单</td><td style="padding:8px;border-bottom:1px solid #eee;">15.2万</td><td style="padding:8px;border-bottom:1px solid #eee;">0.89万</td></tr>
+        </table>
+        <div style="margin-top:12px;padding:12px;background:#E8F5E9;border-radius:8px;font-size:12px;color:#333;line-height:1.7;">
+          <strong>💰 直签品牌仅7个：</strong>追觅、京东商城、拼多多、奶糖派、山下有松、HBN、西屋S180按摩靠垫。<br>
+          直签均单<strong style="color:#2E7D32;">1.79万</strong> vs 媒介0.87万——直签订单价值高一倍。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Part 6: 数据质量 -->
+  <div class="section section-knowledge">
+    <div class="section-title"><span class="section-num">06</span>数据基建缺陷——先修数据再做策略</div>
+    <div style="background:white;border-radius:12px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+      <table style="width:100%;font-size:12px;border-collapse:collapse;">
+        <tr style="background:#f5f5f5;"><th style="padding:10px;text-align:left;">#</th><th style="padding:10px;text-align:left;">问题</th><th style="padding:10px;text-align:left;">影响</th><th style="padding:10px;text-align:left;">严重度</th></tr>
+        <tr><td style="padding:10px;border-bottom:1px solid #eee;">1</td><td style="padding:10px;border-bottom:1px solid #eee;"><strong>"是否是首单"字段100%为空</strong></td><td style="padding:10px;border-bottom:1px solid #eee;">无法快速区分新老客</td><td style="padding:10px;border-bottom:1px solid #eee;"><span style="background:#FFEBEE;color:#C62828;padding:2px 8px;border-radius:4px;font-size:11px;">致命</span></td></tr>
+        <tr><td style="padding:10px;border-bottom:1px solid #eee;">2</td><td style="padding:10px;border-bottom:1px solid #eee;"><strong>品牌赛道12.1%空白 · 占营收19.5%</strong></td><td style="padding:10px;border-bottom:1px solid #eee;">24单未分类（含LA MER、岚图、Vidda）</td><td style="padding:10px;border-bottom:1px solid #eee;"><span style="background:#FFEBEE;color:#C62828;padding:2px 8px;border-radius:4px;font-size:11px;">致命</span></td></tr>
+        <tr><td style="padding:10px;border-bottom:1px solid #eee;">3</td><td style="padding:10px;border-bottom:1px solid #eee;"><strong>"互联网APP"与千瓜赛道不可对标</strong></td><td style="padding:10px;border-bottom:1px solid #eee;">最大赛道(29.3%)无法与大盘对比</td><td style="padding:10px;border-bottom:1px solid #eee;"><span style="background:#FFEBEE;color:#C62828;padding:2px 8px;border-radius:4px;font-size:11px;">致命</span></td></tr>
+        <tr><td style="padding:10px;border-bottom:1px solid #eee;">4</td><td style="padding:10px;border-bottom:1px solid #eee;">无达人实付金额</td><td style="padding:10px;border-bottom:1px solid #eee;">无法计算真实毛利率</td><td style="padding:10px;border-bottom:1px solid #eee;"><span style="background:#FFF3E0;color:#E65100;padding:2px 8px;border-radius:4px;font-size:11px;">严重</span></td></tr>
+        <tr><td style="padding:10px;border-bottom:1px solid #eee;">5</td><td style="padding:10px;border-bottom:1px solid #eee;">等待结款21单无结款月份</td><td style="padding:10px;border-bottom:1px solid #eee;">现金流预测困难</td><td style="padding:10px;border-bottom:1px solid #eee;"><span style="background:#FFF3E0;color:#E65100;padding:2px 8px;border-radius:4px;font-size:11px;">严重</span></td></tr>
+        <tr><td style="padding:10px;">6</td><td style="padding:10px;">无客户首次触达渠道字段</td><td style="padding:10px;">无法归因增长来源</td><td style="padding:10px;"><span style="background:#FFF8E1;color:#F57F17;padding:2px 8px;border-radius:4px;font-size:11px;">中等</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Part 7: 行动建议 -->
+  <div class="section section-homework-high">
+    <div class="section-title"><span class="section-num">07</span>如果只做三件事</div>
+    <div class="knowledge-grid col3">
+      <div class="kcard kc-red">
+        <h4>🔴 1. 补齐数据</h4>
+        <div style="font-size:12px;color:#333;line-height:1.8;">
+          拉取2025年5月同比 + 2026年6月上半月数据<br>
+          24个未分类品牌立即归类<br>
+          <strong>没有正确数据，所有"归因"都是猜测</strong>
+        </div>
+      </div>
+      <div class="kcard kc-orange">
+        <h4>🟠 2. 召回9个未回归老客</h4>
+        <div style="font-size:12px;color:#333;line-height:1.8;">
+          开发人逐一联系pre-May未回归的9个品牌<br>
+          建立S/A/B品牌分级维护日历<br>
+          <strong>新客获取快，瓶颈在留存</strong>
+        </div>
+      </div>
+      <div class="kcard kc-blue">
+        <h4>🔵 3. 修正赛道分类</h4>
+        <div style="font-size:12px;color:#333;line-height:1.8;">
+          互联网APP拆分：品牌属性+内容赛道双标签<br>
+          每个品牌都能对标千瓜大盘<br>
+          <strong>分类体系是分析基础设施</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Part 8: Top 20 品牌 -->
+  <div class="section section-knowledge">
+    <div class="section-title"><span class="section-num">08</span>Top 20 品牌合作深度</div>
+    <div style="background:white;border-radius:12px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06);overflow-x:auto;">
+      <table style="width:100%;font-size:12px;border-collapse:collapse;min-width:700px;">
+        <tr style="background:#f5f5f5;"><th style="padding:8px;">#</th><th style="padding:8px;text-align:left;">品牌</th><th style="padding:8px;">订单数</th><th style="padding:8px;">金额</th><th style="padding:8px;">赛道</th><th style="padding:8px;">千瓜排名</th><th style="padding:8px;">客户类型</th></tr>
+        <tr><td style="padding:8px;text-align:center;">1</td><td style="padding:8px;font-weight:700;">美团</td><td style="padding:8px;text-align:center;">15</td><td style="padding:8px;">13.9万</td><td style="padding:8px;">互联网APP</td><td style="padding:8px;color:#2E7D32;">14赛道全覆盖</td><td style="padding:8px;">媒介</td></tr>
+        <tr><td style="padding:8px;text-align:center;">2</td><td style="padding:8px;font-weight:700;color:#2E7D32;">京东商城 🔑</td><td style="padding:8px;text-align:center;">12</td><td style="padding:8px;">11.3万</td><td style="padding:8px;">互联网APP</td><td style="padding:8px;color:#2E7D32;">14赛道·科技数码#1</td><td style="padding:8px;color:#2E7D32;">品牌直签</td></tr>
+        <tr><td style="padding:8px;text-align:center;">3</td><td style="padding:8px;font-weight:700;">Vidda</td><td style="padding:8px;text-align:center;">1</td><td style="padding:8px;">7.9万</td><td style="padding:8px;color:#C62828;">未分类</td><td style="padding:8px;">—</td><td style="padding:8px;">媒介</td></tr>
+        <tr><td style="padding:8px;text-align:center;">4</td><td style="padding:8px;font-weight:700;color:#2E7D32;">HBN 🔑</td><td style="padding:8px;text-align:center;">1</td><td style="padding:8px;">7.9万</td><td style="padding:8px;">美妆护肤</td><td style="padding:8px;color:#2E7D32;">护肤#18</td><td style="padding:8px;color:#2E7D32;">品牌直签</td></tr>
+        <tr><td style="padding:8px;text-align:center;">5</td><td style="padding:8px;font-weight:700;">伊利</td><td style="padding:8px;text-align:center;">9</td><td style="padding:8px;">7.1万</td><td style="padding:8px;">食品保健</td><td style="padding:8px;color:#2E7D32;">美食饮品#4</td><td style="padding:8px;">媒介</td></tr>
+        <tr><td style="padding:8px;text-align:center;">6</td><td style="padding:8px;font-weight:700;">巴黎欧莱雅</td><td style="padding:8px;text-align:center;">10</td><td style="padding:8px;">6.3万</td><td style="padding:8px;">美妆护肤</td><td style="padding:8px;color:#2E7D32;">护肤#11·6赛道</td><td style="padding:8px;">媒介</td></tr>
+        <tr><td style="padding:8px;text-align:center;">7</td><td style="padding:8px;font-weight:700;">千问</td><td style="padding:8px;text-align:center;">7</td><td style="padding:8px;">5.7万</td><td style="padding:8px;">互联网APP</td><td style="padding:8px;color:#2E7D32;">科技数码#28</td><td style="padding:8px;">媒介</td></tr>
+        <tr><td style="padding:8px;text-align:center;">8</td><td style="padding:8px;font-weight:700;">腾讯元宝</td><td style="padding:8px;text-align:center;">7</td><td style="padding:8px;">5.6万</td><td style="padding:8px;">AI类</td><td style="padding:8px;color:#2E7D32;">教育#4·7赛道</td><td style="padding:8px;">媒介</td></tr>
+        <tr><td style="padding:8px;text-align:center;">9</td><td style="padding:8px;font-weight:700;">东芝</td><td style="padding:8px;text-align:center;">1</td><td style="padding:8px;">5.3万</td><td style="padding:8px;">家居家装</td><td style="padding:8px;color:#2E7D32;">家居家装#14</td><td style="padding:8px;">媒介</td></tr>
+        <tr><td style="padding:8px;text-align:center;">10</td><td style="padding:8px;font-weight:700;">KANS韩束</td><td style="padding:8px;text-align:center;">1</td><td style="padding:8px;">5.3万</td><td style="padding:8px;color:#C62828;">未分类</td><td style="padding:8px;">—</td><td style="padding:8px;">媒介</td></tr>
+      </table>
+      <div style="font-size:11px;color:#888;margin-top:8px;text-align:center;">🔑 = 品牌直签客户 | 全量96品牌 · 63个(65.6%)仅1单 · 大部分为近2-3月新获品牌</div>
+    </div>
+  </div>
+
+  <div class="footer">没有正确的数据，所有"归因"都是猜测。先修基建，再做判断。 | 方片新媒体管理夜校 · MCN自孵化经营分析</div>
+
+</div>
+</div><!-- end course-5 -->
+
 
 </div><!-- end main-content -->
 
@@ -1468,6 +1707,8 @@ function showCourse(n) {
   // Close mobile sidebar
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('sidebarOverlay').classList.remove('show');
+  // Init course-5 charts if switching to it
+  if (n === 5) setTimeout(initC5Charts, 100);
 }
 
 function toggleSidebar() {
@@ -1951,6 +2192,81 @@ document.getElementById('course-4').addEventListener('change', function() {
 });
 
 /* ============================================================
+   Course 5: MCN自孵化经营数据分析 - Charts
+   ============================================================ */
+var c5ChartsInited = false;
+function initC5Charts() {
+  if (c5ChartsInited) return;
+  var page = document.getElementById('course-5');
+  if (!page || !page.classList.contains('active')) return;
+  c5ChartsInited = true;
+
+  (function(){
+    var el = document.getElementById('c5-chart-trend');
+    if (!el) return;
+    var c = echarts.init(el);
+    c.setOption({
+      tooltip: { trigger: 'axis' },
+      legend: { data: ['成单金额','成单数'], top: 5, textStyle: { fontSize: 11 } },
+      grid: { left: 55, right: 20, top: 40, bottom: 30 },
+      xAxis: { type: 'category', data: ['1月','2月','3月','4月','5月'], axisLabel: { fontSize: 11 } },
+      yAxis: [
+        { type: 'value', name: '金额', axisLabel: { formatter: function(v){ return (v/10000).toFixed(0)+'万'; }, fontSize: 10 } },
+        { type: 'value', name: '单数', axisLabel: { fontSize: 10 } }
+      ],
+      series: [
+        { name: '成单金额', type: 'line', yAxisIndex: 0, data: [28294,39480,276952,952462,561660], lineStyle: { color: '#E65100', width: 3 }, itemStyle: { color: '#E65100' }, areaStyle: { color: 'rgba(230,81,0,0.08)' }, symbol: 'circle', symbolSize: 8, label: { show: true, fontSize: 10, formatter: function(p){ return (p.value/10000).toFixed(1)+'万'; } }, markLine: { silent: true, symbol: 'none', lineStyle: { color: '#999', type: 'dashed' }, label: { fontSize: 10, formatter: '异常峰值' }, data: [{ xAxis: '4月' }] } },
+        { name: '成单数', type: 'bar', yAxisIndex: 1, data: [4,1,13,116,64], itemStyle: { color: '#1565C0', borderRadius: [6,6,0,0] }, label: { show: true, position: 'top', fontSize: 10, formatter: '{c}单' }, barGap: '30%' }
+      ]
+    });
+  })();
+
+  (function(){
+    var el = document.getElementById('c5-chart-brand-structure');
+    if (!el) return;
+    var c = echarts.init(el);
+    c.setOption({
+      tooltip: { trigger: 'item', formatter: '{b}: {c}个品牌 ({d}%)' },
+      series: [{ type: 'pie', radius: ['45%','75%'], data: [{ name: '新品牌(首次合作)', value: 74, itemStyle: { color: '#43A047' } },{ name: '老品牌(有过历史)', value: 13, itemStyle: { color: '#1565C0' } }], label: { fontSize: 12, formatter: '{b}\n{c}个 ({d}%)' } }]
+    });
+  })();
+
+  (function(){
+    var el = document.getElementById('c5-chart-retention');
+    if (!el) return;
+    var c = echarts.init(el);
+    c.setOption({
+      tooltip: { trigger: 'item', formatter: '{b}: {c}个品牌 ({d}%)' },
+      series: [{ type: 'pie', radius: ['45%','75%'], data: [{ name: '5月回归(留存)', value: 13, itemStyle: { color: '#43A047' } },{ name: '5月未回归', value: 9, itemStyle: { color: '#E53935' } }], label: { fontSize: 12, formatter: '{b}\n{c}个' } }],
+      graphic: [{ type: 'text', left: 'center', top: '38%', style: { text: 'pre-May\n22个品牌', fontSize: 14, fontWeight: 'bold', fill: '#333', textAlign: 'center' } }]
+    });
+  })();
+
+  (function(){
+    var el = document.getElementById('c5-chart-market');
+    if (!el) return;
+    var c = echarts.init(el);
+    c.setOption({
+      tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+      grid: { left: 85, right: 50, top: 10, bottom: 30 },
+      xAxis: { type: 'value', axisLabel: { formatter: function(v){ return (v/100000000).toFixed(1)+'亿'; }, fontSize: 10 } },
+      yAxis: { type: 'category', data: ['护肤','家居家装','母婴育儿','彩妆','美食饮品','科技数码','个护清洁','服饰穿搭','健身减肥','珠宝配饰','鞋靴箱包','教育','时尚潮流','动漫'], axisLabel: { fontSize: 10 } },
+      series: [{ type: 'bar', data: [{ value: 292496858, itemStyle: { color: '#43A047' } },{ value: 224016223, itemStyle: { color: '#43A047' } },{ value: 152104309, itemStyle: { color: '#E0E0E0' } },{ value: 142208757, itemStyle: { color: '#E0E0E0' } },{ value: 117376180, itemStyle: { color: '#43A047' } },{ value: 93315464, itemStyle: { color: '#43A047' } },{ value: 81635499, itemStyle: { color: '#43A047' } },{ value: 58979684, itemStyle: { color: '#43A047' } },{ value: 44583106, itemStyle: { color: '#E0E0E0' } },{ value: 33697820, itemStyle: { color: '#43A047' } },{ value: 33684776, itemStyle: { color: '#E0E0E0' } },{ value: 23848124, itemStyle: { color: '#E0E0E0' } },{ value: 21575498, itemStyle: { color: '#E0E0E0' } },{ value: 3138961, itemStyle: { color: '#E0E0E0' } }], label: { show: true, position: 'right', fontSize: 9, formatter: function(p){ return (p.value/100000000).toFixed(2)+'亿'; } } }]
+    });
+  })();
+
+  (function(){
+    var el = document.getElementById('c5-chart-self-pie');
+    if (!el) return;
+    var c = echarts.init(el);
+    c.setOption({
+      tooltip: { trigger: 'item', formatter: '{b}: {d}%' },
+      series: [{ type: 'pie', radius: ['40%','70%'], data: [{ name: '互联网APP', value: 544657, itemStyle: { color: '#1565C0' } },{ name: '未分类', value: 362642, itemStyle: { color: '#E53935' } },{ name: '食品保健', value: 293003, itemStyle: { color: '#43A047' } },{ name: '美妆护肤', value: 221778, itemStyle: { color: '#F57C00' } },{ name: '家居家装', value: 148386, itemStyle: { color: '#7B1FA2' } },{ name: '其他', value: 286495, itemStyle: { color: '#90A4AE' } }], label: { fontSize: 10, formatter: '{b}\n{d}%' } }]
+    });
+  })();
+}
+
+/* ============================================================
    Init
    ============================================================ */
 document.addEventListener('DOMContentLoaded', function() {
@@ -1960,12 +2276,13 @@ document.addEventListener('DOMContentLoaded', function() {
   // Course 2
   buildTagTable();
   restoreDataC2();
-  // If no interview records, add one empty card
   if (!document.querySelector('.interview-card')) addInterview();
   // Course 3
   restoreDataC3();
   // Course 4
   restoreDataC4();
+  // Course 5 charts (if active on load)
+  if (window.location.hash === '#course-5') setTimeout(initC5Charts, 200);
 });
 </script>
 
