@@ -1701,6 +1701,58 @@
    ============================================================ */
 var SHARE_KEYS = ['motivation_map_v2','emotion_course_v1','performance_review_v1','delegation_course_v1'];
 
+/* ---- minimal LZ + 6-bit URI encoder (no dependencies) ---- */
+var LZ = { _K: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-$' };
+
+LZ.pack = function(s) {
+  if (!s) return '';
+  // LZW step
+  var dict = {}, w = '', res = [];
+  for (var i = 0; i < s.length; i++) {
+    var c = s.charAt(i), wc = w + c;
+    if (dict[wc] != null) { w = wc; }
+    else {
+      res.push(w.length > 1 ? dict[w] : w.charCodeAt(0));
+      dict[wc] = 256 + Object.keys(dict).length;
+      w = c;
+      if (Object.keys(dict).length >= 0xFFF0) dict = {}; // reset on overflow
+    }
+  }
+  if (w) res.push(w.length > 1 ? dict[w] : w.charCodeAt(0));
+  // Pack 16-bit codes → 6-bit chars
+  var bits = 0, val = 0, out = '';
+  for (var j = 0; j < res.length; j++) {
+    val = (val << 16) | (res[j] & 0xFFFF); bits += 16;
+    while (bits >= 6) { bits -= 6; out += LZ._K.charAt((val >>> bits) & 63); }
+  }
+  if (bits > 0) out += LZ._K.charAt((val << (6 - bits)) & 63);
+  return out;
+};
+
+LZ.unpack = function(s) {
+  if (!s) return '';
+  // Unpack 6-bit chars → 16-bit codes
+  var codes = [], bits = 0, val = 0;
+  for (var i = 0; i < s.length; i++) {
+    val = (val << 6) | LZ._K.indexOf(s.charAt(i)); bits += 6;
+    while (bits >= 16) { bits -= 16; codes.push((val >>> bits) & 0xFFFF); }
+  }
+  if (!codes.length) return '';
+  // LZW decompress
+  var dict = [], prev = String.fromCharCode(codes[0]), out = [prev];
+  for (var c = 0; c < 256; c++) dict[c] = String.fromCharCode(c);
+  var next = 256;
+  for (var j = 1; j < codes.length; j++) {
+    var entry, code = codes[j];
+    if (code < next) entry = dict[code] || '';
+    else entry = prev + prev.charAt(0);
+    out.push(entry);
+    if (next < 0xFFF0) dict[next++] = prev + entry.charAt(0);
+    prev = entry;
+  }
+  return out.join('');
+};
+
 function shareAll() {
   var bundle = {};
   for (var i = 0; i < SHARE_KEYS.length; i++) {
@@ -1711,11 +1763,7 @@ function shareAll() {
     alert('还没有填写任何内容，先填一些再分享吧！');
     return;
   }
-  var json = JSON.stringify(bundle);
-  // URL-safe base64: standard btoa + make URL-safe
-  var b64 = btoa(unescape(encodeURIComponent(json)));
-  var url = window.location.origin + window.location.pathname + '#share=' + b64;
-  // Copy to clipboard
+  var url = window.location.origin + window.location.pathname + '#s=' + LZ.pack(JSON.stringify(bundle));
   if (navigator.clipboard) {
     navigator.clipboard.writeText(url).then(function() {
       var hint = document.getElementById('share-hint');
@@ -1728,23 +1776,15 @@ function shareAll() {
 
 function importFromHash() {
   var hash = window.location.hash;
-  if (hash.indexOf('#share=') !== 0) return false;
-  var b64 = hash.replace('#share=', '');
+  if (hash.indexOf('#s=') !== 0) return false;
   try {
-    var json = decodeURIComponent(escape(atob(b64)));
-    var bundle = JSON.parse(json);
-    var count = 0;
+    var bundle = JSON.parse(LZ.unpack(hash.slice(3)));
     Object.keys(bundle).forEach(function(key) {
       localStorage.setItem(key, JSON.stringify(bundle[key]));
-      count++;
     });
-    // Force full page reload to clean URL
     window.location.replace(window.location.origin + window.location.pathname + '#course-1');
     return true;
-  } catch(e) {
-    console.error('Share link parse error:', e);
-    return false;
-  }
+  } catch(e) { return false; }
 }
 
 /* ============================================================
