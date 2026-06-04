@@ -602,7 +602,8 @@
       <span class="nav-text">MCN自孵化 · 5月经营数据归因分析</span>
     </a>
     <div style="margin-top:16px;padding:0 10px;">
-      <button onclick="shareAll()" style="width:100%;padding:10px;border:1px dashed rgba(255,255,255,0.3);border-radius:8px;background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.7);cursor:pointer;font-size:12px;transition:all 0.2s;" onmouseover="this.style.background='rgba(25,118,210,0.25)';this.style.color='white'" onmouseout="this.style.background='rgba(255,255,255,0.05)';this.style.color='rgba(255,255,255,0.7)'">📤 生成分享链接</button>
+      <button onclick="shareAll()" style="width:100%;padding:10px;border:1px dashed rgba(255,255,255,0.3);border-radius:8px;background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.7);cursor:pointer;font-size:12px;transition:all 0.2s;margin-bottom:6px;" onmouseover="this.style.background='rgba(25,118,210,0.25)';this.style.color='white'" onmouseout="this.style.background='rgba(255,255,255,0.05)';this.style.color='rgba(255,255,255,0.7)'">📤 生成分享链接</button>
+      <button onclick="downloadPrefilled()" style="width:100%;padding:10px;border:1px dashed rgba(255,255,255,0.3);border-radius:8px;background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.7);cursor:pointer;font-size:12px;transition:all 0.2s;" onmouseover="this.style.background='rgba(25,118,210,0.25)';this.style.color='white'" onmouseout="this.style.background='rgba(255,255,255,0.05)';this.style.color='rgba(255,255,255,0.7)'">💾 下载预填版HTML</button>
       <div id="share-hint" style="display:none;margin-top:8px;padding:8px;background:rgba(63,185,80,0.2);border-radius:6px;font-size:11px;color:rgba(255,255,255,0.8);text-align:center;">✅ 链接已复制！<br>发给别人即可看到你的填写内容</div>
     </div>
     <!-- 未来课程：复制上面的 nav-item，改 data-course 和 nav-num 即可 -->
@@ -1700,6 +1701,7 @@
    Share / Import — URL-based sharing
    ============================================================ */
 var SHARE_KEYS = ['motivation_map_v2','emotion_course_v1','performance_review_v1','delegation_course_v1'];
+var PRELOAD = null; /* injected by downloadPrefilled() */
 
 /* ---- minimal LZ + 6-bit URI encoder (no dependencies) ---- */
 var LZ = { _K: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-$' };
@@ -1772,6 +1774,32 @@ function shareAll() {
   } else {
     prompt('复制以下链接分享：', url);
   }
+}
+
+function downloadPrefilled() {
+  var bundle = {};
+  for (var i = 0; i < SHARE_KEYS.length; i++) {
+    var raw = localStorage.getItem(SHARE_KEYS[i]);
+    if (raw) { try { bundle[SHARE_KEYS[i]] = JSON.parse(raw); } catch(e) {} }
+  }
+  if (Object.keys(bundle).length === 0) {
+    alert('还没有填写任何内容，先填一些再下载吧！');
+    return;
+  }
+  // Build HTML with PRELOAD baked in
+  var scriptTag = '\n<script>var PRELOAD=' + JSON.stringify(bundle) + ';<\/script>\n';
+  var html = document.documentElement.outerHTML;
+  // Insert right after ECharts fallback script (before </head>)
+  html = html.replace('</head>', scriptTag + '</head>');
+  var blob = new Blob(['<!DOCTYPE html>\n' + html.replace(/^<!DOCTYPE html>\s*/i, '')], {type: 'text/html;charset=UTF-8'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'index.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+  alert('已下载 index.html！\n\n接下来：\n1. 把这个文件替换掉仓库里的 index.html\n2. git commit + push\n3. 任何人访问普通链接都能看到你的预填内容');
 }
 
 function importFromHash() {
@@ -1868,6 +1896,7 @@ function saveDataC1() {
 function restoreDataC1() {
   try {
     var raw = localStorage.getItem(STORAGE_KEY_C1);
+    if (!raw && PRELOAD && PRELOAD[STORAGE_KEY_C1]) raw = JSON.stringify(PRELOAD[STORAGE_KEY_C1]);
     if (!raw) return;
     var data = JSON.parse(raw);
     for (var i = 1; i <= 8; i++) {
@@ -2150,6 +2179,7 @@ function saveDataC2() {
 function restoreDataC2() {
   try {
     var raw = localStorage.getItem(STORAGE_KEY_C2);
+    if (!raw && PRELOAD && PRELOAD[STORAGE_KEY_C2]) raw = JSON.stringify(PRELOAD[STORAGE_KEY_C2]);
     if (!raw) return;
     var data = JSON.parse(raw);
     if (data.lights) {
@@ -2223,6 +2253,7 @@ function saveDataC3() {
 function restoreDataC3() {
   try {
     var raw = localStorage.getItem(STORAGE_KEY_C3);
+    if (!raw && PRELOAD && PRELOAD[STORAGE_KEY_C3]) raw = JSON.stringify(PRELOAD[STORAGE_KEY_C3]);
     if (!raw) return;
     var data = JSON.parse(raw);
     // High
@@ -2284,6 +2315,7 @@ function saveDataC4() {
 function restoreDataC4() {
   try {
     var raw = localStorage.getItem(STORAGE_KEY_C4);
+    if (!raw && PRELOAD && PRELOAD[STORAGE_KEY_C4]) raw = JSON.stringify(PRELOAD[STORAGE_KEY_C4]);
     if (!raw) return;
     var data = JSON.parse(raw);
     Object.keys(data).forEach(function(field) {
